@@ -1,0 +1,70 @@
+
+
+.bg-yellow-apps{
+    background-color: #fdf7e2;
+}
+
+.bg-yellow-apps-bold{
+    background-color: #fbf3d5;
+}
+
+.th-padd{
+    padding: 3px;
+    font-size: 14px;
+}
+
+.td-padd{
+    padding: 2px;
+    font-size: 12px;
+}
+
+.table-thin{
+    width: 100%;
+}
+
+.hide{
+    display: none;
+}
+
+.page-item{
+    font-size: 12px;
+}
+
+.dataTables_info{
+    font-size: 12px;
+}
+
+.dataTables_length{
+    font-size: 12px;
+}
+
+.dataTables_filter{
+    font-size: 12px;
+}
+
+
+.required{
+    border-color: #ff5b5c;
+}
+
+.btn-primary{
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+.bs-stepper .step.active .bs-stepper-circle {
+    background-color: #28a745 !important;
+    color: #fff;
+}
+
+#orgChart{
+    width: auto;
+    height: auto;
+}
+
+#orgChartContainer{
+    width: 1000px;
+    height: 500px;
+    overflow: auto;
+    background: #eeeeee;
+}
