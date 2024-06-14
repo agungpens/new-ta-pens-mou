@@ -83,13 +83,6 @@
                 </li>
             </ul>
             @endif
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('kegiatan') ? 'active' : '' }}">
-                    <a href="{{ url('kegiatan') }}" class="menu-link">
-                        <div data-i18n="Without menu">Kegiatan</div>
-                    </a>
-                </li>
-            </ul>
         </li>
 
 

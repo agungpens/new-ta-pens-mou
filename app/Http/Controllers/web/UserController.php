@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/users.js');
+        return asset('');
     }
 
     public function index()

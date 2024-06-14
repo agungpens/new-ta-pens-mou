@@ -16,8 +16,7 @@
                                 <div class="col">
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama Panggilan</label>
-                                        <input type="text" class="form-control" id="nama"
-                                            placeholder="Masukan Nama" />
+                                        <input type="text" class="form-control" id="nama" placeholder="Masukan Nama" />
                                     </div>
                                 </div>
                                 <div class="mb-3 col">
@@ -27,8 +26,8 @@
                                         <option value="{{ isset($data->role_id) ? $data->role_id : '' }}">
                                             {{ isset($data->nama_role) ? $data->nama_role : '' }}</option>
                                         @foreach ($role as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama_role }}
-                                            </option>
+                                        <option value="{{ $item->id }}">{{ $item->nama_role }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -40,7 +39,7 @@
                                             {{ isset($data->nama_prodi) ? $data->nama_prodi : '' }}
                                         </option>
                                         @foreach ($prodi as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama_prodi }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->nama_prodi }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -89,3 +88,8 @@
         </div>
     </div>
 </div>
+
+
+@section('scripts')
+@include('page.user.scripts')
+@endsection

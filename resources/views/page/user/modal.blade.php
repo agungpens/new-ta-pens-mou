@@ -1,23 +1,12 @@
-<input type="hidden" id="id" value="{{ isset($id) ? $id : '' }}">
-
-
-<div class="row">
-    <div class="col-md-12 text-end">
-        <a href="{{ url('user') }}" class="dt-button create-new btn btn-secondary" tabindex="0"
-            aria-controls="DataTables_Table_0" type="button">
-            <span><i class="bx bx-chevron-left me-sm-2"></i>
-                <span class="d-none d-sm-inline-block">Kembali</span></span>
-        </a>
-
-    </div>
-</div>
-<br>
-<div class="col-xl-12">
-    <div class="card">
-        <h5 class="card-header">Authentication Detail</h5>
-        <!-- Account -->
-        <form id="formAccountSettings" method="POST">
-            <div class="card-body">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <input type="hidden" name="user_id" id="user_id"
@@ -84,12 +73,15 @@
                     </div>
                 </div>
             </div>
-        </form>
+            <div class="modal-footer" id="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary me-2" onclick="Leveling.submit(this, event)">
+                    <span><i class="bx bx-check-circle me-sm-2"></i>
+                        <span class="d-none d-sm-inline-block">Submit</span>
+                    </span>
+                </button>
+            </div>
+
+        </div>
     </div>
 </div>
-<br>
-
-
-@section('scripts')
-@include('page.user.scripts')
-@endsection
