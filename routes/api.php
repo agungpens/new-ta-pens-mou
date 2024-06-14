@@ -59,7 +59,7 @@ Route::get('jenis-doc/getData', [JenisMouController::class, 'getData'])->name('j
 Route::post('jenis-doc/submit', [JenisMouController::class, 'submit'])->name('jenis-doc/submit');
 Route::post('jenis-doc/delete', [JenisMouController::class, 'delete'])->name('jenis-doc/delete');
 Route::get('jenis-doc/filter', [JenisMouController::class, 'filter'])->name('jenis-doc/filter');
-
+Route::post('jenis-doc/ubah', [JenisMouController::class, 'ubah'])->name('jenis-doc/ubah');
 // ROLE USER
 Route::get('role/getData', [RoleController::class, 'getData'])->name('role/getData');
 Route::post('role/submit', [RoleController::class, 'submit'])->name('role/submit');

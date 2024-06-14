@@ -17,7 +17,7 @@ class JenisMouController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/mou/jenis.js');
+        return asset('');
     }
 
     public function index()

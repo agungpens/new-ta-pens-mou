@@ -1,12 +1,12 @@
 <div class="card">
-    <div class="card-header text-end">
-        <button onclick="Jenis.add()" class="dt-button create-new btn btn-primary" tabindex="0"
-            aria-controls="DataTables_Table_0" type="button">
+    {{-- <div class="card-header text-end">
+        <button type="button" class="dt-button create-new btn btn-primary" tabindex="0"
+            aria-controls="DataTables_Table_0" type="button" onclick="Jenis.add()">
             <span><i class="bx bx-plus me-sm-2"></i>
                 <span class="d-none d-sm-inline-block">Tambah
                     Baru</span></span>
-        </button>
-    </div>
+        </button>>
+    </div> --}}
     <div class="card-body">
         <div class="table-responsive text-nowrap">
             <table class="datatables-basic table table-bordered" id="table-data">
@@ -22,3 +22,7 @@
         </div>
     </div>
 </div>
+@include('page.mou.jenis.form.modal')
+@section('scripts')
+@include('page.mou.jenis.scripts')
+@endsection

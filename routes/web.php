@@ -60,7 +60,7 @@ Route::get('kategori-doc/add', [KategoriMouController::class, 'add'])->name('kat
 Route::get('jenis-doc', [JenisMouController::class, 'index'])->name('jenis-doc')->middleware('auth');
 Route::get('jenis-doc/index', [JenisMouController::class, 'index'])->name('jenis-doc/index')->middleware('auth');
 Route::get('jenis-doc/add', [JenisMouController::class, 'add'])->name('jenis-doc/add')->middleware('auth');
-Route::get('jenis-doc/ubah', [JenisMouController::class, 'ubah'])->name('jenis-doc/ubah')->middleware('auth');
+
 
 // LEVELLING MOU
 Route::get('level-doc', [LevelingMouController::class, 'index'])->name('level-doc')->middleware('auth');
