@@ -66,7 +66,7 @@ Route::get('jenis-doc/add', [JenisMouController::class, 'add'])->name('jenis-doc
 Route::get('level-doc', [LevelingMouController::class, 'index'])->name('level-doc')->middleware('auth');
 Route::get('level-doc/index', [LevelingMouController::class, 'index'])->name('level-doc/index')->middleware('auth');
 Route::get('level-doc/add', [LevelingMouController::class, 'add'])->name('level-doc/add')->middleware('auth');
-Route::get('level-doc/ubah', [LevelingMouController::class, 'ubah'])->name('level-doc/ubah')->middleware('auth');
+
 
 // ROLE MOU
 Route::get('role', [RoleController::class, 'index'])->name('role')->middleware('auth');

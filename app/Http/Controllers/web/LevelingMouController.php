@@ -17,7 +17,7 @@ class LevelingMouController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/mou/leveling.js');
+        return asset('');
     }
 
     public function index()

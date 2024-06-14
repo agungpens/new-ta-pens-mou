@@ -53,6 +53,7 @@ Route::post('level-doc/getData', [LevelingMouController::class, 'getData'])->nam
 Route::post('level-doc/submit', [LevelingMouController::class, 'submit'])->name('level-doc/submit');
 Route::post('level-doc/delete', [LevelingMouController::class, 'delete'])->name('level-doc/delete');
 Route::get('level-doc/filter', [LevelingMouController::class, 'filter'])->name('level-doc/filter');
+Route::post('level-doc/ubah', [LevelingMouController::class, 'ubah'])->name('level-doc/ubah');
 
 // Jenis MOU
 Route::get('jenis-doc/getData', [JenisMouController::class, 'getData'])->name('jenis-doc/getData');

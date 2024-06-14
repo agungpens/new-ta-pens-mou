@@ -121,4 +121,17 @@ class LevelingMouController extends Controller
 
         return response()->json($result);
     }
+    public function ubah(Request $request)
+    {
+        $data = $request->all();
+        $data['is_valid'] = false;
+
+        try {
+            $data['data'] = $this->getDetailData($data['id'])->original;
+            $data['is_valid'] = true;
+        } catch (\Throwable $th) {
+            $data['message'] = $th->getMessage();
+        }
+        return response()->json($data);
+    }
 }

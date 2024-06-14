@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header text-end">
-        <button onclick="Leveling.add()" class="dt-button create-new btn btn-primary" tabindex="0"
-            aria-controls="DataTables_Table_0" type="button">
+        <button type="button" class="dt-button create-new btn btn-primary" tabindex="0"
+            aria-controls="DataTables_Table_0" type="button" onclick="Leveling.add()">
             <span><i class="bx bx-plus me-sm-2"></i>
                 <span class="d-none d-sm-inline-block">Tambah
                     Baru</span></span>
@@ -22,3 +22,9 @@
         </div>
     </div>
 </div>
+
+
+@include('page.mou.leveling.form.modal')
+@section('scripts')
+@include('page.mou.leveling.scripts')
+@endsection
