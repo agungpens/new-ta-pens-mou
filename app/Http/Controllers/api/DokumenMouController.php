@@ -49,7 +49,9 @@ class DokumenMouController extends Controller
             $data_gabungan[$key]['relevansi_prodi'] = $value->relevansi_prodi == null ? [] : $data_prodi->whereIn('id', json_decode($value->relevansi_prodi))->pluck('nama_prodi')->toArray();
             $data_gabungan[$key]['jenis_doc'] = $value->JenisMou->nama_jenis;
             $data_gabungan[$key]['level_mou'] = $value->LevelDocMou->nama_level;
+            $data_gabungan[$key]['level_mou_id'] = $value->LevelDocMou->id;
             $data_gabungan[$key]['kategori_mou'] = $value->KategoriMou->nama_kategori;
+            $data_gabungan[$key]['kategori_mou_id'] = $value->KategoriMou->id;
         }
 
         // Jumlah total data sebelum filtering
@@ -59,11 +61,17 @@ class DokumenMouController extends Controller
         if (isset($_POST)) {
             // Menghitung kembali jumlah data setelah filtering
             $filteredData = $data_gabungan;
-
+            // dd($data_gabungan);
             if (isset($_POST['search']['value']) && !empty($_POST['search']['value'])) {
                 $keyword = $_POST['search']['value'];
                 $filteredData = array_filter($filteredData, function ($item) use ($keyword) {
+                    // dd(strtolower($keyword));
                     return strpos(strtolower($item['nomor_mou']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['file_mou']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['kategori_mou']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['level_mou']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['kerja_sama_dengan']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['judul_mou']), strtolower($keyword)) !== false ||
                         strpos(strtolower($item['status']), strtolower($keyword)) !== false;
                 });
             }
@@ -97,8 +105,9 @@ class DokumenMouController extends Controller
 
             // Filter by kategori_mou
             if (isset($_POST['kategori']) && $_POST['kategori'] !== '') {
+                // dd($_POST['kategori']);
                 $filteredData = array_filter($filteredData, function ($item) {
-                    return $_POST['kategori'] === $item['kategori_mou'];
+                    return $_POST['kategori'] == $item['kategori_mou'];
                 });
             }
             if (isset($_POST['status']) && $_POST['status'] !== '') {
