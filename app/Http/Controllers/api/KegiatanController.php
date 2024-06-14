@@ -79,14 +79,16 @@ class KegiatanController extends Controller
 
         // Mengambil data dari tabel Kegiatan dengan relasi
         $datadb = Kegiatan::with(['NomorDocMou', 'Lampiran'])->where('id', $id)->first();
-
         // Melakukan unserialize pada nilai kolom nomor_moa
         $data_array = json_decode($datadb->nomor_moa);
-
+        if ($data_array == null) {
+            return response()->json($datadb->toArray());
+        }
         // Menambahkan data array ke dalam data yang akan di-DD
         $data = $datadb->toArray();
         $data['nomor_moa'] = $data_array;
         // select DokumenMoa where id in (data_array)
+
         $data['data_moa'] = DokumenMoa::whereIn('nomor_moa', $data_array)->get();
 
         // Mengambil log query

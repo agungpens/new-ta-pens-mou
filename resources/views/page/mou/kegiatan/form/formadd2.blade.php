@@ -28,15 +28,21 @@
                             @endif>
                             <option value=""></option>
                             @foreach ($data_instansi as $item)
-                            <option value="{{ $item }}" {{ isset($data['instansi']) ? 'selected' : '' }}>{{ $item }}
+                            <option value="{{ $item }}" {{ isset($data['instansi']) && $data['instansi'] == $item ? 'selected' : '' }}>{{ $item }}
                             </option>
                             @endforeach
                         </select>
                     </div>
+
                     <div class="col-md-12">
                         <label class="form-label" for="basic-icon-default-fullname">Relevansi Dokumen MOU
                             (Optional)</label>
-                        <div class="input-group mb-3">
+                            <input id="nomor_mou" src="" type="text" class="form-control mb-3"
+                            placeholder="Pilih data dokumen mou" aria-label="Pilih data dokumen mou"
+                            aria-describedby="button-addon1"
+                            value="{{ isset($data['nomor_doc_mou']) && $data['nomor_doc_mou'] != null ? $data['nomor_mou'] . ' - ' . $data['nomor_doc_mou']['kerja_sama_dengan'] : '' }}"
+                            readonly>
+                        {{-- <div class="input-group mb-3">
                             <button class="btn btn-outline-primary" type="button" id="button-addon1"
                                 onclick="Kegiatan.showDataMou(this, event)" @if (Auth::user()->role_id
                                 != 1 && Auth::user()->role_id
@@ -48,7 +54,7 @@
                                 aria-describedby="button-addon1"
                                 value="{{ isset($data['nomor_doc_mou']) && $data['nomor_doc_mou'] != null ? $data['nomor_mou'] . ' - ' . $data['nomor_doc_mou']['kerja_sama_dengan'] : '' }}"
                                 readonly>
-                        </div>
+                        </div> --}}
                         <label class="form-label" for="basic-icon-default-fullname">Relevansi Dokumen MOa
                             (Optional)</label>
                         <div class="table-responsive pt-0 mb-3">
@@ -67,7 +73,12 @@
 
                                         <tr class="input" data_id="{{ $item['id'] }}">
                                             <td class="text-end">
-                                                <div class="input-group mb-2">
+                                                <input id="nomor_moa" type="text" readonly
+                                                class="form-control mb-2 doc_moa{{ $item['nomor_moa'] }}"
+                                                error="nomor_moa" placeholder="Pilih Data File"
+                                                aria-label="Pilih Data File" aria-describedby="button-addon1"
+                                                value="{{ $item['nomor_moa'] . ' - ' . $item['kerja_sama_dengan'] }}">
+                                                {{-- <div class="input-group mb-2">
                                                     <button class="btn btn-outline-primary" type="button"
                                                         id="button-addon1"
                                                         onclick="Kegiatan.showDataMoa(this, 'doc_moa{{ $item['nomor_moa'] }}')"
@@ -81,30 +92,30 @@
                                                         error="nomor_moa" placeholder="Pilih Data File"
                                                         aria-label="Pilih Data File" aria-describedby="button-addon1"
                                                         value="{{ $item['nomor_moa'] . ' - ' . $item['kerja_sama_dengan'] }}">
-                                                </div>
+                                                </div> --}}
                                                 <button class="btn btn-warning btn-sm"
                                                     onclick="return Kegiatan.confirmDownload('{{ $item['file_moa'] }}','{{ $item['file_path'] . $item['file_moa'] }}')">
                                                     Lihat
                                                     File</button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger btn-sm" {{ (session('role') !='Admin' &&
+                                                {{-- <button class="btn btn-danger btn-sm" {{ (session('role') !='Admin' &&
                                                     session('role') !='kerjasama / sub humas' ) ? 'disabled' : '' }}
                                                     data_id="{{ $item['id'] }}"
                                                     onclick="Kegiatan.deleteItemDocMa(this, event)">
                                                     <i class="bx bx-trash"></i>
-                                                </button>
+                                                </button> --}}
                                             </td>
                                         </tr>
                                         @endforeach
                                         @endif
                                         <tr>
                                             <td colspan="7">
-                                                <button type="button" class="btn btn-primary btn-sm" {{ (session('role')
-                                                    !='Admin' && session('role') !='kerjasama / sub humas' )
-                                                    ? 'disabled' : '' }} onclick="Kegiatan.addDocMoa(this, event)">
+                                                {{-- <button type="button" class="btn btn-primary btn-sm"
+                                                {{ (session('role') !='Admin' && session('role') !='kerjasama / sub humas' ) ? 'disabled' : '' }}
+                                                onclick="Kegiatan.addDocMoa(this, event)">
                                                     <i class="fa fa-plus-circle"></i> Tambah
-                                                </button>
+                                                </button> --}}
                                             </td>
                                         </tr>
                                     </tbody>
