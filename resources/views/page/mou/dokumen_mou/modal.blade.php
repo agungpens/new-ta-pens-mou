@@ -63,7 +63,8 @@
                             <input type="text" class="form-control flatpickr required" name="tanggal_dibuat"
                                 id="tanggal_dibuat" error="Tanggal Dibuat" id="basic-icon-default-fullname"
                                 placeholder="Tanggal Dibuat" aria-label="tanggal_dibuat"
-                                aria-describedby="basic-icon-default-fullname2" value="" />
+                                aria-describedby="basic-icon-default-fullname2" onchange="DokumenMou.changeDate()"
+                                value="" />
                         </div>
 
                     </div>
@@ -73,7 +74,7 @@
                             <input type="text" class="form-control flatpickr required" name="tanggal_berakhir"
                                 id="tanggal_berakhir" error="Tanggal berakhir" id="basic-icon-default-fullname"
                                 placeholder="Tanggal berakhir" aria-label="tanggal_berakhir"
-                                aria-describedby="basic-icon-default-fullname2" value="" />
+                                aria-describedby="basic-icon-default-fullname2" onchange="DokumenMou.changeDate()" value="" />
                         </div>
                     </div>
                     <div class="col-md-6">

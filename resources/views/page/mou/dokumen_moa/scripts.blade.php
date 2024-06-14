@@ -1250,13 +1250,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Tanggal Dibuat</label>
-                                <input type="text" id="tanggal_dibuat" class="form-control flatpickr required"
-                                    error="Tanggal Dibuat" placeholder="YYYY-MM-DD">
+                                <input type="date" id="tanggal_dibuat" class="form-control flatpickr tgl_moa${i} required"
+                                    error="Tanggal Dibuat" placeholder="YYYY-MM-DD" onchange="DokumenMoa.changeDate(this,'tgl_moa${i}')">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Tanggal Berakhir</label>
-                                <input type="text" id="tanggal_berakhir" class="form-control flatpickr required"
-                                    error="Tanggal Berakhir" placeholder="YYYY-MM-DD">
+                                <input type="date" id="tanggal_berakhir" class="form-control flatpickr tgl_moa${i} required"
+                                    error="Tanggal Berakhir" placeholder="YYYY-MM-DD" onchange="DokumenMoa.changeDate(this,'tgl_moa${i}')">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Pilih Kategori DOC / Jenis Mitra DOC</label>
@@ -1278,7 +1278,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Status Dokumen</label>
-                                <select id="status_doc" name="status_doc" class="form-select select2 required"
+                                <select id="status_doc" name="status_doc" class="form-select select2 tgl_moa${i} required"
                                     data-allow-clear="true" error="status">
                                     <option value="AKTIF">AKTIF</option>
                                     <option value="TIDAK AKTIF">TIDAK AKTIF</option>
@@ -1504,11 +1504,11 @@ getDataMoa: (nomor_mou) => {
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Tanggal Dibuat</label>
-                                                <input type="text" id="tanggal_dibuat" class="form-control flatpickr required" error="Tanggal Dibuat" placeholder="YYYY-MM-DD" value="${rowData.tanggal_dibuat}">
+                                                <input type="date" id="tanggal_dibuat" class="form-control flatpickr required" error="Tanggal Dibuat" placeholder="YYYY-MM-DD" value="${rowData.tanggal_dibuat}" onchange="DokumenMoa.changeDate(this,'tgl_moa${index}')">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Tanggal Berakhir</label>
-                                                <input type="text" id="tanggal_berakhir" class="form-control flatpickr required" error="Tanggal Berakhir" placeholder="YYYY-MM-DD" value="${rowData.tanggal_berakhir}">
+                                                <input type="date" id="tanggal_berakhir" class="form-control flatpickr required" error="Tanggal Berakhir" placeholder="YYYY-MM-DD" value="${rowData.tanggal_berakhir}" onchange="DokumenMoa.changeDate(this,'tgl_moa${index}')">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Pilih Kategori DOC / Jenis Mitra DOC</label>
@@ -1526,7 +1526,7 @@ getDataMoa: (nomor_mou) => {
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Status Dokumen</label>
-                                                <select id="status_doc" name="status_doc" class="form-select select2 required" data-allow-clear="true" error="status">
+                                                <select id="status_doc" name="status_doc" class="form-select select2 tgl_moa${index} required" data-allow-clear="true" error="status">
                                                     <option value="AKTIF" ${rowData.status_doc === "AKTIF" ? "selected" : ""}>AKTIF</option>
                                                     <option value="TIDAK AKTIF" ${rowData.status_doc === "TIDAK AKTIF" ? "selected" : ""}>TIDAK AKTIF</option>
                                                 </select>
@@ -1604,6 +1604,23 @@ getDataMoa: (nomor_mou) => {
         $("#nomor_mou").val("");
         Toast.success("Informasi", "Anda berhasil mengkosongkan Data MoU");
     },
+    changeDate:(elm,ClassId)=>{
+        let tanggal_dibuat = $(`#tanggal_dibuat.${ClassId}`).val();
+        let tanggal_berakhir = $(`#tanggal_berakhir.${ClassId}`).val();
+
+        console.log('ClassId:', ClassId);
+        console.log('tanggal_dibuat:', tanggal_dibuat);
+        console.log('tanggal_berakhir:', tanggal_berakhir);
+
+        if(tanggal_dibuat!= "" && tanggal_berakhir!= ""){
+            if(tanggal_dibuat > tanggal_berakhir){
+                $(`#tanggal_berakhir.${ClassId}`).val(tanggal_dibuat);
+            }
+            if(tanggal_dibuat < tanggal_berakhir){
+                $(`select#status_doc.${ClassId}`).val('AKTIF').change();
+            }
+        }
+    }
 };
 
 $(function () {

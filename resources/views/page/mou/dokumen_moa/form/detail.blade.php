@@ -74,17 +74,17 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tanggal Dibuat</label>
-                            <input type='text' id="tanggal_dibuat" class="form-control flatpickr required"
+                            <input type='text' id="tanggal_dibuat" class="form-control flatpickr tgl_moa{{ $id }} required"
                                 error="Tanggal Dibuat"
                                 value="{{ isset($data['data'][0]['tanggal_dibuat']) ? $data['data'][0]['tanggal_dibuat'] : '' }}"
-                                placeholder="YYYY-MM-D">
+                                placeholder="YYYY-MM-D" onchange="DokumenMoa.changeDate(this,'tgl_moa{{ $id }}')">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tanggal berakhir</label>
-                            <input type='text' id="tanggal_berakhir" class="form-control flatpickr required"
+                            <input type='text' id="tanggal_berakhir" class="form-control flatpickr tgl_moa{{ $id }} required"
                                 error="Tanggal Berakhir"
                                 value="{{ isset($data['data'][0]['tanggal_berakhir']) ? $data['data'][0]['tanggal_berakhir'] : '' }}"
-                                placeholder="YYYY-MM-D">
+                                placeholder="YYYY-MM-D" onchange="DokumenMoa.changeDate(this,'tgl_moa{{ $id }}')">
                         </div>
 
                         <div class="col-md-6">
@@ -148,7 +148,7 @@
                                 $list_status = ['AKTIF', 'TIDAK AKTIF'];
                                 @endphp
                                 <label class="form-label" for="level">Status Dokumen</label>
-                                <select id="status" name="status" class="select2 form-select required"
+                                <select id="status" name="status" class="select2 form-select tgl_moa{{ $id }} required"
                                     data-allow-clear="true" error="status">
                                     @foreach ($list_status as $item)
                                     <option value="{{ $item }}" {{ isset($data['data'][0]['status']) &&
@@ -166,14 +166,12 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="prodi_{{ $item['id'] }}"
                                         name="relevansi_prodi[]" value="{{ $item['id'] }}"
-                                        @if (in_array($item['nama_prodi'], $data['data'][0]['relevansi_prodi']))
-                                        checked
-                                        @endif>
+                                        @if(in_array($item['nama_prodi'], $data['data'][0]['relevansi_prodi'])) checked @endif>
                                     <label class="form-check-label" for="prodi_{{ $item['id'] }}">
                                         {{ $item['nama_prodi'] }}
                                     </label>
                                 </div>
-                            @endforeach
+                                @endforeach
 
                             </div>
                         </div>

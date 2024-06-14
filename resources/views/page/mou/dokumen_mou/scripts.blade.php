@@ -545,6 +545,19 @@
             reader.readAsDataURL(uploader[0].files[0]);
         });
     },
+
+    changeDate:()=>{
+        let tanggal_dibuat = $("#tanggal_dibuat").val();
+        let tanggal_berakhir = $("#tanggal_berakhir").val();
+        if(tanggal_dibuat!= "" && tanggal_berakhir!= ""){
+            if(tanggal_dibuat > tanggal_berakhir){
+                $("#tanggal_berakhir").val(tanggal_dibuat);
+            }
+            if(tanggal_dibuat < tanggal_berakhir){
+                $("select#status_modal").val('AKTIF').change();
+            }
+        }
+    }
 };
 
 $(function () {
