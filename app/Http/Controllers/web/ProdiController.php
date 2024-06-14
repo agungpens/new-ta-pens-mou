@@ -17,7 +17,7 @@ class ProdiController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/user/prodi.js');
+        return asset('');
     }
 
     public function index()

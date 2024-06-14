@@ -17,7 +17,7 @@ class RoleController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/user/role.js');
+        return asset('');
     }
 
     public function index()

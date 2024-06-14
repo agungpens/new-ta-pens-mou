@@ -22,3 +22,6 @@
         </div>
     </div>
 </div>
+@section('scripts')
+@include('page.user.prodi.scripts')
+@endsection

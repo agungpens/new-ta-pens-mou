@@ -21,8 +21,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="mb-3 col-md-6">
-                        <input type="hidden" name="id" id="id"
-                            value="{{ isset($data->id) ? $data->id : '' }}">
+                        <input type="hidden" name="id" id="id" value="{{ isset($data->id) ? $data->id : '' }}">
                         <label class="form-label" for="basic-icon-default-fullname">Nama
                             Prodi</label>
                         <div class="input-group input-group-merge">
@@ -53,3 +52,8 @@
     </div>
 </div>
 <br>
+
+
+@section('scripts')
+@include('page.user.prodi.scripts')
+@endsection
