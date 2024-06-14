@@ -43,9 +43,11 @@ class ApiDokumenMoaController extends Controller
             $data_gabungan[$key]['relevansi_prodi'] = $value->relevansi_prodi == null ? [] : $data_prodi->whereIn('id', json_decode($value->relevansi_prodi))->pluck('nama_prodi')->toArray();
             $data_gabungan[$key]['jenis_doc'] = $value->JenisMoa->nama_jenis;
             $data_gabungan[$key]['level_moa'] = $value->LevelDocMoa->nama_level;
+            $data_gabungan[$key]['level_moa_id'] = $value->LevelDocMoa->id;
             $data_gabungan[$key]['kategori_moa'] = $value->KategoriMoa->nama_kategori;
+            $data_gabungan[$key]['kategori_moa_id'] = $value->KategoriMoa->id;
         }
-
+        // dd($data_gabungan);
         // Jumlah total data sebelum filtering
         $data['recordsTotal'] = count($data_gabungan);
 
@@ -58,7 +60,10 @@ class ApiDokumenMoaController extends Controller
                 $keyword = $_POST['search']['value'];
                 $filteredData = array_filter($filteredData, function ($item) use ($keyword) {
                     return strpos(strtolower($item['nomor_moa']), strtolower($keyword)) !== false ||
-                        strpos(strtolower($item['status']), strtolower($keyword)) !== false;
+                        strpos(strtolower($item['status']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['kategori_moa']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['file_moa']), strtolower($keyword)) !== false ||
+                        strpos(strtolower($item['nomor_mou']), strtolower($keyword)) !== false;
                 });
             }
 
@@ -85,14 +90,14 @@ class ApiDokumenMoaController extends Controller
             // Filter by level_moa
             if (isset($_POST['level']) && $_POST['level'] !== '') {
                 $filteredData = array_filter($filteredData, function ($item) {
-                    return $_POST['level'] === $item['level_moa'];
+                    return $_POST['level'] == $item['level_moa_id'];
                 });
             }
 
             // Filter by kategori_moa
             if (isset($_POST['kategori']) && $_POST['kategori'] !== '') {
                 $filteredData = array_filter($filteredData, function ($item) {
-                    return $_POST['kategori'] === $item['kategori_moa'];
+                    return $_POST['kategori'] == $item['kategori_moa_id'];
                 });
             }
             if (isset($_POST['status']) && $_POST['status'] !== '') {

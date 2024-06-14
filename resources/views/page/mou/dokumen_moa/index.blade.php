@@ -21,7 +21,7 @@
                                     data-allow-clear="true" {{ session('role') !='Admin' ? '' : '' }}>
                                     <option value="">prodi</option>
                                     @foreach ($list_prodi as $item)
-                                    <option value="{{ $item->id }}" {{ session('prodi')==$item->nama_prodi ? 'selected'
+                                    <option value="{{ $item->nama_prodi}}" {{ session('prodi')==$item->nama_prodi ? 'selected'
                                         : '' }}>
                                         {{ $item->nama_prodi }}</option>
                                     @endforeach
