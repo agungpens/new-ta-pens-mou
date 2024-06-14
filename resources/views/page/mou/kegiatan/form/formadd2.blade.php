@@ -21,10 +21,15 @@
                     <div class="col-md-12 mb-2">
                         <label class="form-label" for="instansi">instansi</label>
                         <select id="instansi" name="instansi" class="select2 form-select required" error="Instansi"
-                            data-allow-clear="true" onchange="Kegiatan.changeInstansi(this)">
+                            data-allow-clear="true" onchange="Kegiatan.changeInstansi(this)" @if (Auth::user()->role_id
+                            != 1 && Auth::user()->role_id
+                            != 7 )
+                            disabled
+                            @endif>
                             <option value=""></option>
                             @foreach ($data_instansi as $item)
-                            <option value="{{ $item }}" {{ isset($data['instansi']) ? 'selected' : '' }}>{{ $item }}</option>
+                            <option value="{{ $item }}" {{ isset($data['instansi']) ? 'selected' : '' }}>{{ $item }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -33,7 +38,11 @@
                             (Optional)</label>
                         <div class="input-group mb-3">
                             <button class="btn btn-outline-primary" type="button" id="button-addon1"
-                                onclick="Kegiatan.showDataMou(this, event)">Pilih</button>
+                                onclick="Kegiatan.showDataMou(this, event)" @if (Auth::user()->role_id
+                                != 1 && Auth::user()->role_id
+                                != 7 )
+                                disabled
+                                @endif>Pilih</button>
                             <input id="nomor_mou" src="" type="text" class="form-control"
                                 placeholder="Pilih data dokumen mou" aria-label="Pilih data dokumen mou"
                                 aria-describedby="button-addon1"
@@ -55,13 +64,18 @@
                                     <tbody>
                                         @if (isset($data['data_moa']))
                                         @foreach ($data['data_moa'] as $item)
-                                        {{-- {{ dd($item); }} --}}
+
                                         <tr class="input" data_id="{{ $item['id'] }}">
                                             <td class="text-end">
                                                 <div class="input-group mb-2">
                                                     <button class="btn btn-outline-primary" type="button"
                                                         id="button-addon1"
-                                                        onclick="Kegiatan.showDataMoa(this, 'doc_moa{{ $item['nomor_moa'] }}')">Pilih</button>
+                                                        onclick="Kegiatan.showDataMoa(this, 'doc_moa{{ $item['nomor_moa'] }}')"
+                                                        @if (Auth::user()->role_id
+                                                        != 1 && Auth::user()->role_id
+                                                        != 7 )
+                                                        disabled
+                                                        @endif>Pilih</button>
                                                     <input id="nomor_moa" type="text" readonly
                                                         class="form-control doc_moa{{ $item['nomor_moa'] }}"
                                                         error="nomor_moa" placeholder="Pilih Data File"
@@ -129,8 +143,13 @@
                                             <td class="text-end">
                                                 <div class="input-group mb-2">
                                                     <button class="btn btn-outline-primary" type="button"
-                                                        id="button-addon1"
-                                                        onclick="Kegiatan.addFile(this)">Pilih</button>
+                                                        id="button-addon1" onclick="Kegiatan.addFile(this)"
+                                                        @if(Auth::user()->role_id
+                                                        != 1 && Auth::user()->role_id
+                                                        != 7 )
+                                                        disabled
+                                                        @endif
+                                                        >Pilih</button>
                                                     <input id="file" type="text" readonly class="form-control"
                                                         error="File" placeholder="Pilih Data File"
                                                         aria-label="Pilih Data File" aria-describedby="button-addon1"

@@ -38,7 +38,7 @@
         </li>
         <li class="menu-item {{ request()->is('kegiatan') ? 'active' : '' }} ">
             <a href="{{ url('kegiatan') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-food-menu"></i>
+                <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Analytics">Kegiatan </div>
             </a>
 

@@ -547,7 +547,7 @@
                     [25, 50, 100],
                 ],
                 ajax: {
-                    url:`{{ route('dokumen-mou/getData') }}`,
+                    url: `{{ route('dokumen-mou/getData') }}`,
                     type: "POST",
                     // "headers": {
                     //     'X-CSRF-TOKEN': `'${tokenApi}'`
@@ -568,7 +568,7 @@
                             row,
                             col
                         ) {
-                            $(td).addClass("td-padd");
+                            // $(td).addClass("td-padd");
                         },
                     },
                     {
@@ -585,7 +585,7 @@
                         },
                     },
                     {
-                        targets: 1,
+                        targets: [0, 1],
                         orderable: false,
                         createdCell: function (
                             td,
@@ -629,7 +629,10 @@
                     {
                         data: "file_mou",
                         render: (data, type, row, meta) => {
-                            let badgeColorClass = row.status === 'AKTIF' ? 'bg-success' : 'bg-danger';
+                            let badgeColorClass =
+                                row.status === "AKTIF"
+                                    ? "bg-success"
+                                    : "bg-danger";
                             return `
                             ${row.file_mou}
                             <br>
@@ -642,21 +645,28 @@
                         data: "nomor_mou",
                     },
                     {
+                        data: "judul_mou",
+                    },
+                    {
                         data: "kerja_sama_dengan",
                     },
                     {
                         data: "relevansi_prodi",
                         render: (data, type, row, meta) => {
-                            return `
-                            ${
-                                // jika prodinya kosong
-                                row.relevansi_prodi == null
-                                    ? ""
-                                    : row.relevansi_prodi_mou.nama_prodi
-                            }
-                            `;
+                        if (!data || data.length === 0) {
+                        return "";
+                        }
+
+                        let html = "<ul>";
+                            data.forEach(prodi => {
+                            html += `<li>${prodi}</li>`;
+                            });
+                            html += "</ul>";
+
+                        return html;
                         },
                     },
+
                     {
                         data: "tanggal_dibuat",
                         render: (data, type, row, meta) => {
@@ -671,12 +681,11 @@
                         data: "id",
                         render: (data, type, row, meta) => {
                             return `
-                            ${row.kategori_mou.nama_kategori} <br>
-                            ${row.level_doc_mou.nama_level} <br>
-                            ${row.jenis_mou.nama_jenis}
+                            ${row.kategori_mou} <br>
+                            ${row.level_mou} <br>
+                            ${row.jenis_doc}
                             `;
                         },
-
                     },
                 ],
             });
@@ -817,7 +826,10 @@
                     {
                         data: "file_moa",
                         render: (data, type, row, meta) => {
-                            let badgeColorClass = row.status === 'AKTIF' ? 'bg-success' : 'bg-danger';
+                            let badgeColorClass =
+                                row.status === "AKTIF"
+                                    ? "bg-success"
+                                    : "bg-danger";
                             return `
                             ${row.file_moa}
                             <br>
@@ -834,6 +846,9 @@
                         data: "nomor_moa",
                     },
                     {
+                        data: "judul_moa",
+                    },
+                    {
                         data: "kerja_sama_dengan",
                         render: (data, type, row, meta) => {
                             return `
@@ -844,9 +859,17 @@
                     {
                         data: "relevansi_prodi",
                         render: (data, type, row, meta) => {
-                            return `
-                            ${row.relevansi_prodi_moa.nama_prodi}
-                            `;
+                        if (!data || data.length === 0) {
+                        return "";
+                        }
+
+                        let html = "<ul>";
+                            data.forEach(prodi => {
+                            html += `<li>${prodi}</li>`;
+                            });
+                            html += "</ul>";
+
+                        return html;
                         },
                     },
                     {
@@ -863,12 +886,11 @@
                         data: "id",
                         render: (data, type, row, meta) => {
                             return `
-                            ${row.kategori_moa.nama_kategori} <br>
-                            ${row.level_doc_moa.nama_level} <br>
-                            ${row.jenis_moa.nama_jenis}
+                            ${row.kategori_moa} <br>
+                            ${row.level_moa} <br>
+                            ${row.jenis_doc}
                             `;
                         },
-
                     },
                 ],
             });
