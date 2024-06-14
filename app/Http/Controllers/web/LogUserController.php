@@ -15,7 +15,7 @@ class LogUserController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/log_user.js');
+        return asset('');
     }
 
     public function index()

@@ -108,6 +108,6 @@ Route::get('dokumen-moa/detail', [DokumenMoaController::class, 'detail'])->name(
 
 
 // LogUser
-Route::get('log-user', [LogUserController::class, 'index'])->middleware('auth');
-Route::get('log-user/index', [LogUserController::class, 'index'])->middleware('auth');
-Route::get('log-user/detail', [LogUserController::class, 'detail'])->middleware('auth');
+Route::get('log-user', [LogUserController::class, 'index'])->name('log-user')->middleware('auth');
+Route::get('log-user/index', [LogUserController::class, 'index'])->name('log-user/index')->middleware('auth');
+Route::get('log-user/detail', [LogUserController::class, 'detail'])->name('log-user/detail')->middleware('auth');

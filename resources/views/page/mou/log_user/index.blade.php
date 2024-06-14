@@ -18,3 +18,6 @@
 </div>
 
 
+@section('scripts')
+@include('page.mou.log_user.scripts')
+@endsection

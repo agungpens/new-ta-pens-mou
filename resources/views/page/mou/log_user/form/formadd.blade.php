@@ -21,29 +21,30 @@
                 <div class="col-6">
                     <div class="mb-2">
                         <label for="nama_user" class="form-label">Nama User</label>
-                        <input type="text" class="form-control" id="nama_user" name="nama_user"
-                            placeholder="Nama User" value="{{ $data['nama_username'] }}" readonly>
+                        <input type="text" class="form-control" id="nama_user" name="nama_user" placeholder="Nama User"
+                            value="{{ $data['nama_username'] }}" readonly>
                     </div>
                     <div class="mb-2">
                         <label for="ip" class="form-label">IP</label>
-                        <input type="text" class="form-control" id="ip" name="ip"
-                            placeholder="IP" value="{{ $data['ip'] }}" readonly>
+                        <input type="text" class="form-control" id="ip" name="ip" placeholder="IP"
+                            value="{{ $data['ip'] }}" readonly>
                     </div>
                     <div class="mb-2">
                         <label for="action" class="form-label">action</label>
-                        <input type="text" class="form-control" id="action" name="action"
-                            placeholder="action" value="{{ $data['action'] }}" readonly>
+                        <input type="text" class="form-control" id="action" name="action" placeholder="action"
+                            value="{{ $data['action'] }}" readonly>
                     </div>
                     <div class="mb-2">
                         <label for="waktu" class="form-label">waktu</label>
-                        <input type="text" class="form-control" id="waktu" name="waktu"
-                            placeholder="waktu" value="{{ $data['created_at'] }}" readonly>
+                        <input type="text" class="form-control" id="waktu" name="waktu" placeholder="waktu"
+                            value="{{ $data['created_at'] }}" readonly>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-2">
                         <label for="content" class="form-label">Content</label>
-                        <textarea name="content" id="content" cols="30" rows="10" class="form-control" readonly>{{ $data['content'] }}</textarea>
+                        <textarea name="content" id="content" cols="30" rows="10" class="form-control"
+                            readonly>{{ $data['content'] }}</textarea>
                     </div>
                 </div>
             </div>
@@ -51,3 +52,8 @@
     </div>
 </div>
 <br>
+
+
+@section('scripts')
+@include('page.mou.log_user.scripts')
+@endsection

@@ -119,7 +119,7 @@ Route::post('kegiatan/searchDataByInstansi', [KegiatanController::class, 'search
 
 
 // Log User
-Route::post('log-user/getData', [LogUserController::class, 'getData']);
+Route::post('log-user/getData', [LogUserController::class, 'getData'])->name('log-user/getData');
 
 
 
