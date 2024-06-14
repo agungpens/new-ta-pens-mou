@@ -1608,10 +1608,6 @@ getDataMoa: (nomor_mou) => {
         let tanggal_dibuat = $(`#tanggal_dibuat.${ClassId}`).val();
         let tanggal_berakhir = $(`#tanggal_berakhir.${ClassId}`).val();
 
-        console.log('ClassId:', ClassId);
-        console.log('tanggal_dibuat:', tanggal_dibuat);
-        console.log('tanggal_berakhir:', tanggal_berakhir);
-
         if(tanggal_dibuat!= "" && tanggal_berakhir!= ""){
             if(tanggal_dibuat > tanggal_berakhir){
                 $(`#tanggal_berakhir.${ClassId}`).val(tanggal_dibuat);
