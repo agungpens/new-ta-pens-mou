@@ -237,9 +237,10 @@
                 </div>
                 <span class="fw-semibold d-block mb-1">Total Semua <br> Dokumen</span>
                 <h3 class="card-title mb-2">{{ $total_mou }}</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
+                <small class="text-success fw-semibold">Aktif <i class="bx bx-up-arrow-alt"></i>
                     {{ $total_mou_aktif }}</small>
-                <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
+                <br>
+                <small class="text-danger fw-semibold">Tidak Aktif <i class="bx bx-down-arrow-alt"></i>
                     {{ $total_mou_tidak_aktif }}</small>
             </div>
         </div>
@@ -263,9 +264,10 @@
                 </div>
                 <span class="fw-semibold d-block mb-1">Total Semua <br> Dokumen</span>
                 <h3 class="card-title mb-2">{{ $total_moa }}</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
+                <small class="text-success fw-semibold">Aktif <i class="bx bx-up-arrow-alt"></i>
                     {{ $total_moa_aktif }}</small>
-                <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
+                <br>
+                <small class="text-danger fw-semibold">Tidak Aktif <i class="bx bx-down-arrow-alt"></i>
                     {{ $total_moa_tidak_aktif }}</small>
             </div>
         </div>
@@ -296,7 +298,224 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-6">
+        <canvas id="chartIndustri" width="400" height="200"></canvas>
+    </div>
+    <div class="col-6">
+        <canvas id="chartLevel" width="400" height="200"></canvas>
+    </div>
+</div>
+<div class="row">
+    <div class="col-9">
+        <canvas id="chartProdi" width="400" height="100"></canvas>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                        <span class="badge bg-label-success rounded-pill">Total Semua Mitra</span>
+                    </div>
+                </div>
+                <h1 class="card-title mb-2" id="jumlah_mitra"></h1>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
-@section('script')
+@section('scripts')
+<script>
+    // Function to initialize Chart.js
+    function initializeChart(data_mitra_industri) {
+        // Define arrays for labels and data
+        let labels = [];
+        let chartData = [];
+        let backgroundColors = [];
+        let borderColors = [];
+
+        // Define color sets
+        const colors = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ];
+        const borderColorsSet = [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ];
+
+        let index = 0;
+
+        // Iterate over the data object using foreach
+        $.each(data_mitra_industri, function (key, value) {
+            labels.push(key.replace(/_/g, ' ')); // Replace underscores with spaces for better readability
+            chartData.push(value);
+            backgroundColors.push(colors[index % colors.length]);
+            borderColors.push(borderColorsSet[index % borderColorsSet.length]);
+            index++;
+        });
+
+        const ctx = document.getElementById('chartIndustri').getContext('2d');
+        const chartConfig = {
+            type: 'bar', // You can change this to 'line', 'pie', etc.
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Mitra Industri',
+                    data: chartData,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        const chartIndustri = new Chart(ctx, chartConfig);
+    }
+    function initializeLevelChart(levelData) {
+            const ctx = document.getElementById('chartLevel').getContext('2d');
+            let labels = [];
+            let chartData = [];
+            let backgroundColors = [];
+            let borderColors = [];
+
+            const colors = [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ];
+            const borderColorsSet = [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)'
+            ];
+
+            let index = 0;
+
+            $.each(levelData, function (key, value) {
+                labels.push(key.replace(/_/g, ' '));
+                chartData.push(value);
+                backgroundColors.push(colors[index % colors.length]);
+                borderColors.push(borderColorsSet[index % borderColorsSet.length]);
+                index++;
+            });
+
+            const chartConfig = {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Level',
+                        data: chartData,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, chartConfig);
+    }
+    function initializeProdiChart(jumlah_prodi) {
+        const ctx = document.getElementById('chartProdi').getContext('2d');
+        let labels = [];
+        let chartData = [];
+        let backgroundColors = [];
+        let borderColors = [];
+
+        const colors = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ];
+        const borderColorsSet = [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ];
+
+        let index = 0;
+
+        $.each(jumlah_prodi, function (key, value) {
+            labels.push(key.replace(/_/g, ' ')); // Replace underscores with spaces for better readability
+            chartData.push(value);
+            backgroundColors.push(colors[index % colors.length]);
+            borderColors.push(borderColorsSet[index % borderColorsSet.length]);
+            index++;
+        });
+
+        const chartConfig = {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah Prodi',
+                    data: chartData,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y', // This makes the chart horizontal
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, chartConfig);
+    }
+
+
+    $(function () {
+        $.ajax({
+            type: "post",
+            url: `{{ route('dashboard/getJumlahData') }}`,
+            dataType: "json",
+            success: function (response) {
+                if (response.is_valid) {
+                    let data = response.data;
+                    // return console.log(data);
+                    let data_mitra_industri = data.data_mitra_industri;
+                    initializeChart(data_mitra_industri);
+                    initializeLevelChart(data.data_mitra_level);
+                    initializeProdiChart(data.jumlah_prodi);
+                    $('#jumlah_mitra').html(`<i class="menu-icon tf-icons bx bx-user"></i>` + data.data_mitra_instansi);
+
+                }
+            }
+        });
+    });
+</script>
 @endsection

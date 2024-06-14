@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ApiDashboardController;
 use App\Http\Controllers\api\ApiDokumenMoaController;
 use App\Http\Controllers\api\DokumenMouController;
 use App\Http\Controllers\api\JenisMouController;
@@ -121,6 +122,8 @@ Route::post('kegiatan/searchDataByInstansi', [KegiatanController::class, 'search
 // Log User
 Route::post('log-user/getData', [LogUserController::class, 'getData'])->name('log-user/getData');
 
+// Dashboard
+Route::post('dashboard/getJumlahData', [ApiDashboardController::class, 'getJumlahData'])->name('dashboard/getJumlahData');
 
 
 // MOBILE API

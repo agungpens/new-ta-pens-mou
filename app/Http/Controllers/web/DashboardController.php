@@ -58,13 +58,13 @@ class DashboardController extends Controller
             $data_gabungan[$key]['kategori_mou'] = $value->KategoriMou->nama_kategori;
         }
         $data['mou_yang_akan_habis'] = $data_gabungan;
-        $datadb = DokumenMoa::with(['LevelDocMoa', 'KategoriMoa', 'JenisMoa'])->whereBetween('tanggal_berakhir', [$date_now, $date_two_months_later])
+        $datadbMoa = DokumenMoa::with(['LevelDocMoa', 'KategoriMoa', 'JenisMoa'])->whereBetween('tanggal_berakhir', [$date_now, $date_two_months_later])
             ->orderBy('tanggal_dibuat', 'desc');
 
 
         $data_gabungan_moa = [];
 
-        foreach ($datadb->get() as $key => $value) {
+        foreach ($datadbMoa->get() as $key => $value) {
             $data_gabungan_moa[$key]['id'] = $value->id;
             $data_gabungan_moa[$key]['nomor_moa'] = $value->nomor_moa;
             $data_gabungan_moa[$key]['nomor_mou'] = $value->nomor_mou;
@@ -84,7 +84,7 @@ class DashboardController extends Controller
 
 
 
-// dd($data['mou_yang_akan_habis']);
+
 
         $view = view('page.dashboard', $data);
         $put['title_content'] = 'Home';
