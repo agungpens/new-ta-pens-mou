@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
-use App\Models\KategoriMou;
 use App\Http\Controllers\api\KategoriMouController as ApiKategoriMouController;
+use App\Models\KategoriDoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +17,7 @@ class KategoriMouController extends Controller
 
     public function getJs()
     {
-        return asset('assets/js/controller/mou/kategori.js');
+        return asset('');
     }
 
     public function index()
@@ -78,7 +78,7 @@ class KategoriMouController extends Controller
         // begin transaction
         DB::beginTransaction();
         try {
-            $push = $data['user_id'] == '' || null ? new KategoriMou() : KategoriMou::find($data['user_id']);
+            $push = $data['user_id'] == '' || null ? new KategoriDoc() : KategoriDoc::find($data['user_id']);
             $push->id = $data['user_id'];
             $push->username = $data['username'];
             $push->nama = $data['nama'];

@@ -55,7 +55,6 @@ Route::get('user/ubah', [UserController::class, 'ubah'])->name('user/ubah')->mid
 Route::get('kategori-doc', [KategoriMouController::class, 'index'])->name('kategori-doc')->middleware('auth');
 Route::get('kategori-doc/index', [KategoriMouController::class, 'index'])->name('kategori-doc/index')->middleware('auth');
 Route::get('kategori-doc/add', [KategoriMouController::class, 'add'])->name('kategori-doc/add')->middleware('auth');
-Route::get('kategori-doc/ubah', [KategoriMouController::class, 'ubah'])->name('kategori-doc/ubah')->middleware('auth');
 
 // JENIS MOU
 Route::get('jenis-doc', [JenisMouController::class, 'index'])->name('jenis-doc')->middleware('auth');

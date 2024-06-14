@@ -46,6 +46,7 @@ Route::post('kategori-doc/getData', [KategoriMouController::class, 'getData'])->
 Route::post('kategori-doc/submit', [KategoriMouController::class, 'submit'])->name('kategori-doc/submit');
 Route::post('kategori-doc/delete', [KategoriMouController::class, 'delete'])->name('kategori-doc/delete');
 Route::get('kategori-doc/filter', [KategoriMouController::class, 'filter'])->name('kategori-doc/filter');
+Route::post('kategori-doc/ubah', [KategoriMouController::class, 'ubah'])->name('kategori-doc/ubah');
 
 // Leveling MOU
 Route::post('level-doc/getData', [LevelingMouController::class, 'getData'])->name('level-doc/getData');

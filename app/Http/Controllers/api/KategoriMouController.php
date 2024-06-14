@@ -172,27 +172,17 @@ class KategoriMouController extends Controller
 
         return response()->json($data);
     }
-    // {
-    //     $data = $request->all();
+    public function ubah(Request $request)
+    {
+        $data = $request->all();
+        $data['is_valid'] = false;
 
-    //     $datadb = User::where('nama', 'LIKE', '%' . $data['nama'] . '%')
-    //         ->orWhere('role_id', $data['role'])
-    //         ->orWhere('prodi_id', $data['prodi'])
-    //         ->get()->toArray();
-
-    //     // jika tidak ada datanya
-    //     if (empty($datadb)) {
-    //         return response()->json([
-    //             'status' => 'error',
-    //             'message' => 'Data tidak ditemukan',
-    //             'data' => $datadb
-    //         ]);
-    //     } else {
-    //         return response()->json([
-    //             'status' => 'success',
-    //             'message' => 'Data ditemukan',
-    //             'data' => $datadb
-    //         ]);
-    //     }
-    // }
+        try {
+            $data['data'] = $this->getDetailData($data['id'])->original;
+            $data['is_valid'] = true;
+        } catch (\Throwable $th) {
+            $data['message'] = $th->getMessage();
+        }
+        return response()->json($data);
+    }
 }
