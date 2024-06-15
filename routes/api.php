@@ -130,6 +130,7 @@ Route::post('dashboard/getJumlahData', [ApiDashboardController::class, 'getJumla
 // Login User With API
 Route::post('login/loginApi', [LoginController::class, 'loginApi']);
 Route::post('login/getDataUser', [LoginController::class, 'getDataUser'])->middleware("auth:sanctum");
+Route::post('login/getDataDetailUser', [LoginController::class, 'getDataDetailUser']);
 
 Route::get('prodi/getDataForMobile', [ProdiController::class, 'getDataForMobile']);
 // MOU DOCUMENT
@@ -137,6 +138,9 @@ Route::get('mobile/dokumen-mou/getData', [DokumenMouController::class, 'getDataM
 Route::get('mobile/dokumen-mou/getDetailDataMobile', [DokumenMouController::class, 'getDetailDataMobile']);
 // MOA DOCUMENT
 Route::get('mobile/dokumen-moa/getData', [ApiDokumenMoaController::class, 'getDataMoa']);
+Route::get('mobile/dokumen-moa/getDetailDataMobile', [ApiDokumenMoaController::class, 'getDetailDataMobile']);
+
+
 
 // CEK UPDATE DATA
 Route::get('updateDataMou', [DokumenMouController::class, 'updateDataMou']);

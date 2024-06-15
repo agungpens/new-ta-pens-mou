@@ -331,8 +331,29 @@ class DokumenMouController extends Controller
         try {
             DB::enableQueryLog();
             $result['data'] = [];
-            $datadb =  DokumenMou::with(['LevelDocMou', 'KategoriMou', 'JenisMou', 'RelevansiProdiMou'])->orderBy('tanggal_dibuat', 'desc');
-            $result['data'] = $datadb->get()->toArray();
+            $datadb = DokumenMou::with(['LevelDocMou', 'KategoriMou', 'JenisMou'])
+                ->orderBy('tanggal_dibuat', 'desc');
+
+            $data_prodi = Prodi::get();
+            $data_gabungan = [];
+
+            foreach ($datadb->get() as $key => $value) {
+                $data_gabungan[$key]['id'] = $value->id;
+                $data_gabungan[$key]['nomor_mou'] = $value->nomor_mou;
+                $data_gabungan[$key]['file_mou'] = $value->file_mou;
+                $data_gabungan[$key]['judul_mou'] = $value->judul_mou;
+                $data_gabungan[$key]['kerja_sama_dengan'] = $value->kerja_sama_dengan;
+                $data_gabungan[$key]['tanggal_dibuat'] = $value->tanggal_dibuat;
+                $data_gabungan[$key]['tanggal_berakhir'] = $value->tanggal_berakhir;
+                $data_gabungan[$key]['status'] = $value->status;
+                $data_gabungan[$key]['relevansi_prodi'] = $value->relevansi_prodi == null ? [] : $data_prodi->whereIn('id', json_decode($value->relevansi_prodi))->pluck('nama_prodi')->toArray();
+                $data_gabungan[$key]['jenis_doc'] = $value->JenisMou->nama_jenis;
+                $data_gabungan[$key]['level_mou'] = $value->LevelDocMou->nama_level;
+                $data_gabungan[$key]['level_mou_id'] = $value->LevelDocMou->id;
+                $data_gabungan[$key]['kategori_mou'] = $value->KategoriMou->nama_kategori;
+                $data_gabungan[$key]['kategori_mou_id'] = $value->KategoriMou->id;
+            }
+            $result['data'] = $data_gabungan;
             $result['is_valid'] = true;
             return response()->json($result);
         } catch (\Throwable $th) {
@@ -347,15 +368,46 @@ class DokumenMouController extends Controller
         try {
             DB::enableQueryLog();
             $data = $request->all();
-            $datadb = DokumenMou::with(['LevelDocMou', 'KategoriMou', 'JenisMou', 'RelevansiProdiMou'])
-                ->where('id', $data['id']);
-            $result['data'] = $datadb->first();
-            $result['is_valid'] = true;
+
+            // Fetch the document using 'first()' and handle it properly as an object
+            $datadb = DokumenMou::with(['LevelDocMou', 'KategoriMou', 'JenisMou'])
+                ->where('id', $data['id'])
+                ->orderBy('tanggal_dibuat', 'desc')
+                ->first();
+
+            if ($datadb) {
+                $data_prodi = Prodi::get();
+                $data_gabungan = [];
+
+                // Populate the $data_gabungan array with necessary details
+                $data_gabungan['id'] = $datadb->id;
+                $data_gabungan['nomor_mou'] = $datadb->nomor_mou;
+                $data_gabungan['file_mou'] = $datadb->file_mou;
+                $data_gabungan['judul_mou'] = $datadb->judul_mou;
+                $data_gabungan['kerja_sama_dengan'] = $datadb->kerja_sama_dengan;
+                $data_gabungan['tanggal_dibuat'] = $datadb->tanggal_dibuat;
+                $data_gabungan['tanggal_berakhir'] = $datadb->tanggal_berakhir;
+                $data_gabungan['status'] = $datadb->status;
+                $data_gabungan['relevansi_prodi'] = $datadb->relevansi_prodi == null ? [] : $data_prodi->whereIn('id', json_decode($datadb->relevansi_prodi))->pluck('nama_prodi')->toArray();
+                $data_gabungan['jenis_doc'] = $datadb->JenisMou->nama_jenis;
+                $data_gabungan['level_mou'] = $datadb->LevelDocMou->nama_level;
+                $data_gabungan['level_mou_id'] = $datadb->LevelDocMou->id;
+                $data_gabungan['kategori_mou'] = $datadb->KategoriMou->nama_kategori;
+                $data_gabungan['kategori_mou_id'] = $datadb->KategoriMou->id;
+
+                $result['data'] = $data_gabungan;
+                $result['is_valid'] = true;
+            } else {
+                $result['message'] = 'Document not found';
+            }
+
             return response()->json($result);
         } catch (\Throwable $th) {
             $result['message'] = $th->getMessage();
+            return response()->json($result);
         }
     }
+
 
     public function updateDataMou(Request $request)
     {

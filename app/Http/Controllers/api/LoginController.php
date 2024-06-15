@@ -28,6 +28,21 @@ class LoginController extends Controller
 
         return response()->json($result);
     }
+    public function getDataDetailUser(Request $request)
+    {
+        $data = $request->all();
+        // return response()->json($data);
+        $result['is_valid'] = false;
+
+        try {
+            $result['data'] = User::with(['DetailUser', 'Roles', 'Prodis'])->find($data['id']);
+            $result['is_valid'] = true;
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+        }
+
+        return response()->json($result);
+    }
     public function loginApi(Request $request)
     {
         $result['is_valid'] = false;

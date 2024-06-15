@@ -486,15 +486,39 @@ class ApiDokumenMoaController extends Controller
         try {
             DB::enableQueryLog();
             $data = $request->all();
-            $datadb = DokumenMoa::with(['doc_mou', 'LevelDocMoa', 'KategoriMoa', 'JenisMoa', 'RelevansiProdiMoa'])
-                ->where('id', $data['id']);
-            $result['data'] = $datadb->first();
+            $datadb = DokumenMoa::with(['LevelDocMoa', 'KategoriMoa', 'JenisMoa'])->where('id', $data['id'])
+                ->orderBy('tanggal_dibuat', 'desc');
+
+            $data_prodi = Prodi::get();
+            $data_gabungan = [];
+
+            foreach ($datadb->get() as $key => $value) {
+                $data_gabungan[$key]['id'] = $value->id;
+                $data_gabungan[$key]['nomor_moa'] = $value->nomor_moa;
+                $data_gabungan[$key]['nomor_mou'] = $value->nomor_mou;
+                $data_gabungan[$key]['file_moa'] = $value->file_moa;
+                $data_gabungan[$key]['file_path'] = $value->file_path;
+                $data_gabungan[$key]['judul_moa'] = $value->judul_moa;
+                $data_gabungan[$key]['kerja_sama_dengan'] = $value->kerja_sama_dengan;
+                $data_gabungan[$key]['tanggal_dibuat'] = $value->tanggal_dibuat;
+                $data_gabungan[$key]['tanggal_berakhir'] = $value->tanggal_berakhir;
+                $data_gabungan[$key]['status'] = $value->status;
+                $data_gabungan[$key]['relevansi_prodi'] = $value->relevansi_prodi == null ? [] : $data_prodi->whereIn('id', json_decode($value->relevansi_prodi))->pluck('nama_prodi')->toArray();
+                $data_gabungan[$key]['jenis_doc'] = $value->JenisMoa->nama_jenis;
+                $data_gabungan[$key]['jenis_doc_id'] = $value->JenisMoa->id;
+                $data_gabungan[$key]['level_moa'] = $value->LevelDocMoa->nama_level;
+                $data_gabungan[$key]['level_moa_id'] = $value->LevelDocMoa->id;
+                $data_gabungan[$key]['kategori_moa'] = $value->KategoriMoa->nama_kategori;
+                $data_gabungan[$key]['kategori_moa_id'] = $value->KategoriMoa->id;
+            }
             $result['is_valid'] = true;
+            $result['data'] = $data_gabungan;
             return response()->json($result);
         } catch (\Throwable $th) {
             $result['message'] = $th->getMessage();
         }
     }
+
     public function updateDataMoa(Request $request)
     {
         $result['is_valid'] = false;
