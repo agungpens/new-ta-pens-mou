@@ -187,7 +187,24 @@ class DokumenMouController extends Controller
     public function submit(Request $request)
     {
         $data = $request->post();
-        // begin transaction
+
+        // validation
+        if (isset($data)) {
+            $this->validate($request, [
+                'data.nomor_mou' =>'required',
+                'data.judul_mou' =>'required',
+                'data.tanggal_dibuat' =>'required',
+                'data.tanggal_berakhir' =>'required',
+                'data.jenis' =>'required',
+                'data.kategori' =>'required',
+                'data.level' =>'required',
+                'data.status' =>'required',
+                'data.kerja_sama_dengan' =>'required',
+                'data.file' =>'required',
+                'data.file_name' =>'required',
+            ]);
+        }
+
 
         DB::beginTransaction();
         try {
@@ -202,7 +219,7 @@ class DokumenMouController extends Controller
             $push->kategori_mou     = $data['data']['kategori'];
             $push->level_mou = $data['data']['level'];
             $push->status = $data['data']['status'];
-            $push->relevansi_prodi = json_encode($data['data']['relevansi_prodi']);
+            $push->relevansi_prodi = isset($data['data']['relevansi_prodi']) ? json_encode($data['data']['relevansi_prodi']) : null;
             $push->kerja_sama_dengan = $data['data']['kerja_sama_dengan'];
 
             if (isset($data['data']['file'])) {
@@ -247,7 +264,7 @@ class DokumenMouController extends Controller
                 'jenis_doc' => $data['data']['jenis'],
                 'kategori_mou' => $data['data']['kategori'],
                 'level_mou' => $data['data']['level'],
-                'relevansi_prodi' => $data['data']['relevansi_prodi'],
+                'relevansi_prodi' => isset($data['data']['relevansi_prodi']) ? $data['data']['relevansi_prodi'] : '',
 
                 'file_mou' =>  isset($imageName) ? $imageName : "",
                 'file_path' => isset($dbpathlamp) ?  $dbpathlamp : "",

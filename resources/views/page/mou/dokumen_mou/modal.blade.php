@@ -22,7 +22,7 @@
                                 placeholder="Pilih data dokumen mou" aria-label="Pilih data dokumen mou"
                                 aria-describedby="button-addon1"
                                 value="{{ isset($data->file_mou) ? $data->nomor_mou . ' - ' . $data->kerja_sama_dengan : '' }}"
-                                readonly>
+                                readonly required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -45,17 +45,17 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Nomor Mou</label>
                         <input type='text' id="nomor_mou" class="form-control required" error="Nomor Mou" value=""
-                            placeholder="Nomor Mou">
+                            placeholder="Nomor Mou" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">kerja sama dengan</label>
                         <input type='text' id="kerja_sama_dengan" class="form-control required" error="Kerjasama Dengan"
-                            value="" placeholder="Kerjasama Dengan">
+                            value="" placeholder="Kerjasama Dengan" required>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Judul Mou</label>
                         <textarea class="form-control required" error="Judul MoU" placeholder="Judul MoU"
-                            name="judul_mou" id="judul_mou" cols="10" rows="5"></textarea>
+                            name="judul_mou" id="judul_mou" cols="10" rows="5" required></textarea>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -64,7 +64,7 @@
                                 id="tanggal_dibuat" error="Tanggal Dibuat" id="basic-icon-default-fullname"
                                 placeholder="Tanggal Dibuat" aria-label="tanggal_dibuat"
                                 aria-describedby="basic-icon-default-fullname2" onchange="DokumenMou.changeDate()"
-                                value="" />
+                                value="" required />
                         </div>
 
                     </div>
@@ -74,14 +74,14 @@
                             <input type="text" class="form-control flatpickr required" name="tanggal_berakhir"
                                 id="tanggal_berakhir" error="Tanggal berakhir" id="basic-icon-default-fullname"
                                 placeholder="Tanggal berakhir" aria-label="tanggal_berakhir"
-                                aria-describedby="basic-icon-default-fullname2" onchange="DokumenMou.changeDate()" value="" />
+                                aria-describedby="basic-icon-default-fullname2" onchange="DokumenMou.changeDate()" value="" required />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="kategori_modal">Pilih kategori Doc / jenis mitra doc</label>
                             <select id="kategori_modal" name="kategori_modal" class="select2 form-select required"
-                                data-allow-clear="true" error="kategori">
+                                data-allow-clear="true" error="kategori" required>
                                 <option value=""></option>
                                 @foreach ($list_kategori as $item)
                                 <option value="{{$item->id}}">
@@ -95,7 +95,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="level_modal">Pilih Level Dokumen</label>
                             <select id="level_modal" name="level_modal" class="select2 form-select required"
-                                data-allow-clear="true" error="level">
+                                data-allow-clear="true" error="level" required>
                                 <option value=""></option>
                                 @foreach ($list_level as $item)
                                 <option value="{{ $item->id }}">
