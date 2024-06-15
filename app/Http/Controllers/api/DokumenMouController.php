@@ -200,8 +200,6 @@ class DokumenMouController extends Controller
                 'data.level' =>'required',
                 'data.status' =>'required',
                 'data.kerja_sama_dengan' =>'required',
-                'data.file' =>'required',
-                'data.file_name' =>'required',
             ]);
         }
 
