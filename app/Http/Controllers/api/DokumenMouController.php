@@ -389,7 +389,7 @@ class DokumenMouController extends Controller
                 ->where('id', $data['id'])
                 ->orderBy('tanggal_dibuat', 'desc')
                 ->first();
-
+// return response()->json($datadb);
             if ($datadb) {
                 $data_prodi = Prodi::get();
                 $data_gabungan = [];
@@ -398,6 +398,7 @@ class DokumenMouController extends Controller
                 $data_gabungan['id'] = $datadb->id;
                 $data_gabungan['nomor_mou'] = $datadb->nomor_mou;
                 $data_gabungan['file_mou'] = $datadb->file_mou;
+                $data_gabungan['file_path'] = $datadb->file_path;
                 $data_gabungan['judul_mou'] = $datadb->judul_mou;
                 $data_gabungan['kerja_sama_dengan'] = $datadb->kerja_sama_dengan;
                 $data_gabungan['tanggal_dibuat'] = $datadb->tanggal_dibuat;

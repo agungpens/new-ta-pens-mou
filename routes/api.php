@@ -11,7 +11,7 @@ use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\LogUserController;
 use App\Http\Controllers\api\MasterTemplateDocController;
 use App\Http\Controllers\api\ProdiController;
-use App\Http\Controllers\api\profileController;
+use App\Http\Controllers\api\ProfileController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\web\DokumenMoaController;
@@ -34,8 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('profile/loadFormAuth', [ProfileController::class, 'loadFormAuth']);
-Route::post('profile/submit', [ProfileController::class, 'submit']);
+Route::post('profile/loadFormAuth', [ProfileController::class, 'loadFormAuth'])->name('profile/loadFormAuth');
+Route::post('profile/submit', [ProfileController::class, 'submit'])->name('profile/submit');
 
 // user
 Route::get('user/getData', [UserController::class, 'getData'])->name('user/getData');

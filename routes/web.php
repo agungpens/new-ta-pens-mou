@@ -38,10 +38,10 @@ Route::get('registrasi', [RegistrasiController::class, 'index'])->name('registra
 Route::post('registrasi/submit', [RegistrasiController::class, 'submit'])->middleware('guest');
 
 // Dashboard
-Route::get('home', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('home', [DashboardController::class, 'index'])->name('home')->middleware('auth');
 
 // Profile
-Route::get('profile/detail', [ProfileController::class, 'index'])->middleware('auth');
+Route::get('profile/detail', [ProfileController::class, 'index'])->name('profile/detail')->middleware('auth');
 // Route::post('profile/detail', [ProdiController::class, 'submit'])->middleware('auth');
 // Route::post('profile/auth/detail', [ProdiController::class, 'updateAuth'])->middleware('auth');
 

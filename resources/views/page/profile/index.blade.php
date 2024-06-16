@@ -99,3 +99,9 @@
         </div>
     </div>
 </div>
+
+
+
+@section('scripts')
+@include('page.profile.scripts')
+@endsection

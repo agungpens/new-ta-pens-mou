@@ -18,7 +18,7 @@ class ProfileController extends Controller
 
     public function getJs()
     {
-        return 'assets/js/controller/profile.js';
+        return '';
     }
 
     public function index(Request $request)
