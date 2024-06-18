@@ -336,4 +336,32 @@ class KegiatanController extends Controller
 
         return response()->json($data);
     }
+
+
+
+
+
+    // MOBILE
+    public function getDataInstansi()
+    {
+        $data['is_valid'] = false;
+        $data['data_instansi'] = [];
+
+
+        try {
+            $data['data_dokumen'] = DokumenMou::with(['DokumenMoa'])->get()->toArray();
+            foreach ($data['data_dokumen'] as $dokumenMou) {
+                $data['data_instansi'][] = $dokumenMou['kerja_sama_dengan'];
+                foreach ($dokumenMou['dokumen_moa'] as $dokumenMoa) {
+                    $data['data_instansi'][] = $dokumenMoa['kerja_sama_dengan'];
+                }
+            }
+            $data['data_instansi'] = array_values(array_unique($data['data_instansi']));
+            $data['is_valid'] = true;
+        } catch (\Throwable $th) {
+            $data['message'] = $th->getMessage();
+        }
+
+        return response()->json($data);
+    }
 }

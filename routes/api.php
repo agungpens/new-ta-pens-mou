@@ -140,6 +140,8 @@ Route::get('mobile/dokumen-mou/getDetailDataMobile', [DokumenMouController::clas
 Route::get('mobile/dokumen-moa/getData', [ApiDokumenMoaController::class, 'getDataMoa']);
 Route::get('mobile/dokumen-moa/getDetailDataMobile', [ApiDokumenMoaController::class, 'getDetailDataMobile']);
 
+// KEGIATAN
+Route::get('mobile/kegiatan/getDataInstansi', [KegiatanController::class, 'getDataInstansi']);
 
 
 // CEK UPDATE DATA
