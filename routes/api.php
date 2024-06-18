@@ -102,6 +102,7 @@ Route::post('dokumen-moa/showDataProdi', [ApiDokumenMoaController::class, 'showD
 Route::post('dokumen-moa/getDataMoaWithNomorMou', [ApiDokumenMoaController::class, 'getDataMoaWithNomorMou'])->name('dokumen-moa/getDataMoaWithNomorMou');
 Route::post('dokumen-moa/updateData', [ApiDokumenMoaController::class, 'updateData'])->name('dokumen-moa/updateData');
 Route::post('dokumen-moa/getDataProdi', [ApiDokumenMoaController::class, 'getDataProdi'])->name('dokumen-moa/getDataProdi');
+Route::post('dokumen-moa/getDataMou', [ApiDokumenMoaController::class, 'getDataMou'])->name('dokumen-moa/getDataMou');
 
 // KEGIATAN
 Route::post('kegiatan/getData', [KegiatanController::class, 'getData'])->name('kegiatan/getData');

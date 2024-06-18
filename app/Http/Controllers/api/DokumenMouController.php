@@ -117,7 +117,7 @@ class DokumenMouController extends Controller
             }
             if (isset($_POST['judul_mou']) && $_POST['judul_mou'] !== '') {
                 $filteredData = array_filter($filteredData, function ($item) {
-                    return $_POST['judul_mou'] === $item['judul_mou'];
+                    return strtolower($_POST['judul_mou']) === strtolower($item['judul_mou']);
                 });
             }
             if (isset($_POST['tanggal_dibuat']) && $_POST['tanggal_dibuat'] !== '') {
@@ -128,6 +128,11 @@ class DokumenMouController extends Controller
             if (isset($_POST['tanggal_berakhir']) && $_POST['tanggal_berakhir'] !== '') {
                 $filteredData = array_filter($filteredData, function ($item) {
                     return $_POST['tanggal_berakhir'] === $item['tanggal_berakhir'];
+                });
+            }
+            if (isset($_POST['kerja_sama']) && $_POST['kerja_sama'] !== '') {
+                $filteredData = array_filter($filteredData, function ($item) {
+                    return strtolower($_POST['kerja_sama']) === strtolower($item['kerja_sama_dengan']);
                 });
             }
 

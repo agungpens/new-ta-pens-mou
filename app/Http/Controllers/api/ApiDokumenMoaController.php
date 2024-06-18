@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\DokumenMoa;
+use App\Models\DokumenMou;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -107,7 +108,7 @@ class ApiDokumenMoaController extends Controller
             }
             if (isset($_POST['judul_moa']) && $_POST['judul_moa'] !== '') {
                 $filteredData = array_filter($filteredData, function ($item) {
-                    return $_POST['judul_moa'] === $item['judul_moa'];
+                    return strtolower($_POST['judul_moa']) === strtolower($item['judul_moa']);
                 });
             }
             if (isset($_POST['tanggal_dibuat']) && $_POST['tanggal_dibuat'] !== '') {
@@ -118,6 +119,11 @@ class ApiDokumenMoaController extends Controller
             if (isset($_POST['tanggal_berakhir']) && $_POST['tanggal_berakhir'] !== '') {
                 $filteredData = array_filter($filteredData, function ($item) {
                     return $_POST['tanggal_berakhir'] === $item['tanggal_berakhir'];
+                });
+            }
+            if (isset($_POST['kerja_sama']) && $_POST['kerja_sama'] !== '') {
+                $filteredData = array_filter($filteredData, function ($item) {
+                    return strtolower($_POST['kerja_sama']) === strtolower($item['kerja_sama_dengan']);
                 });
             }
 
@@ -625,5 +631,48 @@ class ApiDokumenMoaController extends Controller
         } catch (\Throwable $th) {
             $result['message'] = $th->getMessage();
         }
+    }
+
+
+    public function getDataMou()
+    {
+
+        DB::enableQueryLog();
+        $data['data'] = [];
+        $data['recordsTotal'] = 0;
+        $data['recordsFiltered'] = 0;
+        $datadb =  DokumenMou::with(['LevelDocMou', 'KategoriMou', 'JenisMou'])->orderBy('tanggal_dibuat', 'desc');
+
+        // dd($datadb->get());
+        if (isset($_POST)) {
+            $data['recordsTotal'] = $datadb->get()->count();
+            if (isset($_POST['search']['value'])) {
+                $keyword = $_POST['search']['value'];
+                $datadb->where(function ($query) use ($keyword) {
+                    $query->where('nomor_mou', 'LIKE', '%' . $keyword . '%');
+                    $query->Orwhere('status', 'LIKE', '%' . $keyword . '%');
+                    $query->Orwhere('kerja_sama_dengan', 'LIKE', '%' . $keyword . '%');
+                });
+            }
+            if (isset($_POST['order'][0]['column'])) {
+                $datadb->orderBy('id', $_POST['order'][0]['dir']);
+            }
+
+
+            $data['recordsFiltered'] = $datadb->get()->count();
+
+            if (isset($_POST['length'])) {
+                $datadb->limit($_POST['length']);
+            }
+            if (isset($_POST['start'])) {
+                $datadb->offset($_POST['start']);
+            }
+        }
+        $data['data'] = $datadb->get()->toArray();
+        // dd($data['data']);
+        $data['draw'] = $_POST['draw'];
+        $query = DB::getQueryLog();
+
+        return response()->json($data);
     }
 }

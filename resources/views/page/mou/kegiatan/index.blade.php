@@ -18,6 +18,7 @@
                         <th class="text-center p-0">Action</th>
                         <th>NOMOR MOU</th>
                         <th>NOMOR MOA</th>
+                        <th>Instansi</th>
                         <th>Kegiatan</th>
                     </tr>
                 </thead>

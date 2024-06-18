@@ -272,6 +272,7 @@
                 serverSide: true,
                 ordering: true,
                 autoWidth: false,
+                searching: false, // Menonaktifkan fitur pencarian
                 order: [[0, "desc"]],
                 aLengthMenu: [
                     [25, 50, 100],
@@ -606,7 +607,7 @@
                     [25, 50, 100],
                 ],
                 ajax: {
-                    url: `{{ route('dokumen-mou/getData') }}`,
+                    url: `{{ route('dokumen-moa/getDataMou') }}`,
                     type: "POST",
                     // "headers": {
                     //     'X-CSRF-TOKEN': `'${tokenApi}'`
@@ -710,23 +711,6 @@
                         data: "kerja_sama_dengan",
                     },
                     {
-                        data: "relevansi_prodi",
-                        render: (data, type, row, meta) => {
-                        if (!data || data.length === 0) {
-                        return "";
-                        }
-
-                        let html = "<ul>";
-                            data.forEach(prodi => {
-                            html += `<li>${prodi}</li>`;
-                            });
-                            html += "</ul>";
-
-                        return html;
-                        },
-                        },
-
-                    {
                         data: "tanggal_dibuat",
                         render: (data, type, row, meta) => {
                             return `
@@ -740,9 +724,9 @@
                         data: "id",
                         render: (data, type, row, meta) => {
                             return `
-                            ${row.kategori_mou} <br>
-                            ${row.level_mou} <br>
-                            ${row.jenis_doc}
+                            ${row.kategori_mou.nama_kategori} <br>
+                            ${row.level_doc_mou.nama_level} <br>
+                            ${row.jenis_mou.nama_jenis}
                             `;
                         },
                     },

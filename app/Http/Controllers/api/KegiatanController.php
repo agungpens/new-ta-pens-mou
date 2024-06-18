@@ -27,24 +27,17 @@ class KegiatanController extends Controller
         $data['recordsTotal'] = 0;
         $data['recordsFiltered'] = 0;
         $datadb =  Kegiatan::with(['NomorDocMou', 'Lampiran']);
-        // dd($datadb->get());
+        // dd($datadb->get()->toArray());
         if (isset($_POST)) {
             $data['recordsTotal'] = $datadb->get()->count();
             if (isset($_POST['search']['value'])) {
                 $keyword = $_POST['search']['value'];
                 $datadb->where(function ($query) use ($keyword) {
                     $query->where('nomor_mou', 'LIKE', '%' . $keyword . '%');
+                    $query->where('instansi', 'LIKE', '%' . $keyword . '%');
                     // $query->Orwhere('status', 'LIKE', '%' . $keyword . '%');
                 });
             }
-
-
-            if (isset($_POST['prodi'])) {
-                if ($_POST['prodi'] != '') {
-                    $datadb->where('relevansi_prodi', '=', $_POST['prodi']);
-                }
-            }
-
 
             if (isset($_POST['order'][0]['column'])) {
                 $datadb->orderBy('id', $_POST['order'][0]['dir']);

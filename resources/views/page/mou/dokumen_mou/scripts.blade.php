@@ -244,6 +244,7 @@
                     [25, 50, 100],
                     [25, 50, 100],
                 ],
+                searching: false, // Menonaktifkan fitur pencarian
                 ajax: {
                     url: `{{ route('dokumen-mou/getData') }}`,
                     type: "POST",

@@ -313,63 +313,60 @@
                     },
                 ],
                 columns: [
-                    {
-                        data: "id",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                    },
-                    {
-                        data: "id",
-                        render: (data, type, row, meta) => {
-                            let role = User.getRole();
-                            if (role == 'Admin') {
-                                return `
-                            <button class="btn btn-warning  mb-2" data_id="${data}" onclick="Kegiatan.ubah(this)">
-                                <i class="bx bx-edit"></i>
-                            </button>
-                                `;
-                            }
-                            return `
-                            <button class="btn btn-warning mb-2" data_id="${data}" onclick="Kegiatan.ubah(this)">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                                `;
-                        },
-                    },
-
-                    {
-                        data: "nomor_mou",
-                        render: (data, type, row, meta) => {
-                            return `
-                            ${row.nomor_doc_mou != null ? row.nomor_doc_mou.nomor_mou : ''}
-                                `;
-                        },
-                    },
-
-                    {
-                        data: "nomor_moa",
-                        render: (data, type, row, meta) => {
-                            let data_nomor_moa = row.nomor_moa;
-                            let nomor_moa_html = '<ul>'; // Mulai tag <ul>
-
-                            // Lakukan unserialize dan tambahkan nilai-nilainya ke dalam tag <li>
-                            $.each(data_nomor_moa, function (index, element) {
-                                nomor_moa_html += '<li>' + element + '</li>'; // Tambahkan nilai ke dalam tag <li>
-                            });
-
-                            nomor_moa_html += '</ul>'; // Tutup tag <ul>
-
-                            return nomor_moa_html; // Kembalikan HTML yang berisi nilai-nilai nomor_moa dalam format <ul><li></li></ul>
-                        },
-                    },
-
-
-                    {
-                        data: "kegiatan",
-                    },
-
-                ],
+                            {
+                                data: "id",
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                },
+                            },
+                            {
+                                data: "id",
+                                render: (data, type, row, meta) => {
+                                    let role = User.getRole();
+                                    if (role == 'Admin') {
+                                        return `
+                                            <button class="btn btn-warning mb-2" data_id="${data}" onclick="Kegiatan.ubah(this)">
+                                                <i class="bx bx-edit"></i>
+                                            </button>
+                                        `;
+                                    }
+                                    return `
+                                        <button class="btn btn-warning mb-2" data_id="${data}" onclick="Kegiatan.ubah(this)">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    `;
+                                },
+                            },
+                            {
+                                data: "nomor_mou",
+                                render: (data, type, row, meta) => {
+                                    return `
+                                        ${row.nomor_mou != null ? row.nomor_mou : ''}
+                                    `;
+                                },
+                            },
+                            {
+                                data: "nomor_moa",
+                                render: (data, type, row, meta) => {
+                                    let data_nomor_moa = row.nomor_moa;
+                                    if (data_nomor_moa != null) {
+                                        let nomor_moa_html = '<ul>';
+                                        $.each(data_nomor_moa, function (index, element) {
+                                            nomor_moa_html += '<li>' + element + '</li>';
+                                        });
+                                        nomor_moa_html += '</ul>';
+                                        return nomor_moa_html;
+                                    }
+                                    return '';
+                                },
+                            },
+                            {
+                                data: "instansi",
+                            },
+                            {
+                                data: "kegiatan",
+                            },
+                        ],
             });
         }
     },
