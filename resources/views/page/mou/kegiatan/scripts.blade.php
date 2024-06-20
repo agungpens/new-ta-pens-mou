@@ -1183,7 +1183,7 @@
     confirmDownload: (fileName, filePath) => {
         Swal.fire({
             title: 'Apakah Anda Yakin?',
-            text: `Anda akan mengunuduh data file ${fileName}.docx ?`,
+            text: `Anda akan mengunuduh data file ${fileName} ?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -1191,8 +1191,9 @@
             confirmButtonText: 'Ya, Download!'
         }).then((result) => {
             if (result.value) {
+                let env_url = `{{ env('URL') }}`;
                 let url_path = `${filePath}`;
-                window.location.href = url_path;
+                window.location.href = env_url == 'public' ? `{{ asset('${url_path}') }}` : `${url_path}`;
             }
         })
     },

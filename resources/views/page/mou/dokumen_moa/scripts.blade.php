@@ -1589,8 +1589,9 @@ getDataMoa: (nomor_mou) => {
             confirmButtonText: "Ya, Download!",
         }).then((result) => {
             if (result.value) {
+                let env_url = `{{ env('URL') }}`;
                 let url_path = `${filePath}`;
-                window.location.href = url_path;
+                window.open(env_url == 'public' ? `{{ asset('${url_path}') }}` : `${url_path}`,"_blank");
             }
         });
     },
