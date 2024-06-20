@@ -1,11 +1,11 @@
 <div class="card">
     <div class="card-header text-end">
-        <button onclick="Role.add()" class="dt-button create-new btn btn-primary" tabindex="0"
+        {{-- <button onclick="Role.add()" class="dt-button create-new btn btn-primary" tabindex="0"
             aria-controls="DataTables_Table_0" type="button">
             <span><i class="bx bx-plus me-sm-2"></i>
                 <span class="d-none d-sm-inline-block">Tambah
                     Baru</span></span>
-        </button>
+        </button> --}}
     </div>
     <div class="card-body">
         <div class="table-responsive text-nowrap">
@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th class="text-center">Action</th>
+                        {{-- <th class="text-center">Action</th> --}}
                         <th>Nama Role</th>
                         <th>Keterangan</th>
                     </tr>

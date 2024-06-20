@@ -28,20 +28,35 @@
                             @endif>
                             <option value=""></option>
                             @foreach ($data_instansi as $item)
-                            <option value="{{ $item }}" {{ isset($data['instansi']) && $data['instansi']==$item
-                                ? 'selected' : '' }}>{{ $item }}
+                            <option value="{{ $item }}" {{ isset($data['instansi']) &&
+                                strtolower($data['instansi'])==strtolower($item) ? 'selected' : '' }}>{{ $item }}
                             </option>
                             @endforeach
                         </select>
+
                     </div>
 
                     <div class="col-md-12">
                         <label class="form-label" for="basic-icon-default-fullname">Relevansi Dokumen MOU
                             (Optional)</label>
-                        <select id="nomor_mou" name="nomor_mou" class="select2 form-select mb-3" onchange="Kegiatan.changeNomorMou(this)"></select>
+                        <select id="nomor_mou" name="nomor_mou" class="select2 form-select mb-3"
+                            onchange="Kegiatan.changeNomorMou(this)">
+                            @if (isset($data_by_instansi))
+                            <option value=""></option>
+                            @foreach ($data_by_instansi['data_mou'] as $item)
+                            <option value="{{ $item['nomor_mou'] }}" {{ isset($data['nomor_mou']) &&
+                                $data['nomor_mou']==$item['nomor_mou']? 'selected' : '' }}>{{ $item['nomor_mou'] }} - {{
+                                $item['kerja_sama_dengan'] }}
+                            </option>
+                            @endforeach
+                            @endif
+                        </select>
                         <label class="form-label" for="basic-icon-default-fullname">Relevansi Dokumen MOA
                             (Optional)</label>
-                        <select id="kumpulan_nomor_moa" name="kumpulan_nomor_moa" class="select2 form-select mb-3" ></select>
+                        <select id="kumpulan_nomor_moa" name="kumpulan_nomor_moa"
+                            class="select2 form-select mb-3">
+
+                        </select>
 
                         <div class="table-responsive pt-0 mb-3">
                             <div class="col-12">

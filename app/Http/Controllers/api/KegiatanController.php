@@ -26,7 +26,7 @@ class KegiatanController extends Controller
         $data['data'] = [];
         $data['recordsTotal'] = 0;
         $data['recordsFiltered'] = 0;
-        $datadb =  Kegiatan::with(['NomorDocMou', 'Lampiran']);
+        $datadb =  Kegiatan::with(['Lampiran']);
         // dd($datadb->get()->toArray());
         if (isset($_POST)) {
             $data['recordsTotal'] = $datadb->get()->count();
@@ -99,13 +99,12 @@ class KegiatanController extends Controller
         $data_record = array();
         $nomor_moa = null;
         $nomor_mou = null;
-        // dd(isset($data['nomor_moa']));
 
-        if ($data['data']['nomor_mou'] == null && (isset($data['nomor_moa']) && $data['nomor_moa'] == null)) {
+
+        if ( $data['data']['nomor_mou'] == null || (isset($data['nomor_moa']) && $data['nomor_moa'] == null)) {
             return response()->json([
                 'status' => 422,
                 'message' => 'Data Nomor MOU / MOA Tidak boleh kosong , isi salah satu saja!',
-
             ]);
         }
         if (!isset($data['data_lampiran'])) {

@@ -20,21 +20,29 @@
                             <label class="form-label" for="basic-icon-default-fullname">Relevansi Dokumen MOU
                                 (Optional)</label>
 
-                            <div class="input-group mb-3">
-                                <button class="btn btn-outline-primary" type="button" id="button-addon1"
-                                    onclick="DokumenMoa.showDataMou(this, event)">Pilih</button>
-                                <button class="btn btn-outline-danger" type="button" id="button-addon1"
-                                    onclick="DokumenMoa.resetDataMou(this, event)"><i class="bx bx-trash"></i></button>
-                                <input id="nomor_mou" src="" type="text" class="form-control"
+                                @if (session('role') == 'Admin' || session('role') == 'kerjasama / sub humas')
+                                <div class="input-group mb-3">
+                                    <button class="btn btn-outline-primary" type="button" id="button-addon1"
+                                        onclick="DokumenMoa.showDataMou(this, event)">Pilih</button>
+                                    <button class="btn btn-outline-danger" type="button" id="button-addon1"
+                                        onclick="DokumenMoa.resetDataMou(this, event)"><i class="bx bx-trash"></i></button>
+                                    <input id="nomor_mou" src="" type="text" class="form-control"
+                                        placeholder="Pilih data dokumen mou" aria-label="Pilih data dokumen mou"
+                                        aria-describedby="button-addon1"
+                                        value="@if (isset($data['data'][0]['nomor_mou'])){{ $data['data'][0]['nomor_mou'] . ' - ' . $data['data'][0]['kerja_sama_dengan'] }}@endif"
+                                        readonly>
+                                </div>
+                                @else
+                                <input id="nomor_mou" src="" type="text" class="form-control mb-2"
                                     placeholder="Pilih data dokumen mou" aria-label="Pilih data dokumen mou"
                                     aria-describedby="button-addon1"
                                     value="@if (isset($data['data'][0]['nomor_mou'])){{ $data['data'][0]['nomor_mou'] . ' - ' . $data['data'][0]['kerja_sama_dengan'] }}@endif"
                                     readonly>
-                            </div>
-
+                                @endif
                             <label class="form-label" for="basic-icon-default-fullname">
                                 File MOA
                             </label>
+                            @if (session('role') == 'Admin' || session('role') == 'kerjasama / sub humas')
                             <div class="input-group mb-3">
                                 <button class="btn btn-outline-primary" type="button" id="button-addon1"
                                     onclick="DokumenMoa.addFileOutTable(this)">
@@ -46,6 +54,14 @@
                                     value="{{ isset($data['data'][0]['file_moa']) ? $data['data'][0]['nomor_moa'] . ' - ' . $data['data'][0]['kerja_sama_dengan'] : '' }}"
                                     readonly>
                             </div>
+                            @else
+                            <input id="file" type="text" class="form-control required mb-2" error="File MOA"
+                                placeholder="Pilih data dokumen mou" aria-label="Pilih data dokumen mou"
+                                aria-describedby="button-addon1"
+                                value="{{ isset($data['data'][0]['file_moa']) ? $data['data'][0]['nomor_moa'] . ' - ' . $data['data'][0]['kerja_sama_dengan'] : '' }}"
+                                readonly>
+                            @endif
+
                             <div class="text-end mb-2">
                                 <button class="btn btn-success" type="button" id="button-addon1"
                                     onclick="return DokumenMoa.confirmDownload('{{ $data['data'][0]['file_moa'] }}','{{ $data['data'][0]['file_path'] . $data['data'][0]['file_moa'] }}')">

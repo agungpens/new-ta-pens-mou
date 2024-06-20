@@ -352,11 +352,21 @@
                     {
                         data: "id",
                         render: (data, type, row, meta) => {
-                            return `
-                            <button class="btn btn-warning mb-2" data_id="${data}" onclick="DokumenMoa.detail(this)">
-                                <i class="fa fa-edit" ></i>
-                            </button>
-                                `;
+
+                            let role = User.getRole();
+                                    if (role == 'Admin' || role == 'kerjasama / sub humas') {
+                                        return `
+                                            <button class="btn btn-warning mb-2" data_id="${data}" onclick="DokumenMoa.detail(this)">
+                                                <i class="fa fa-edit" ></i>
+                                            </button>
+                                        `;
+                                    }
+                                    return `
+                                        <button class="btn btn-warning mb-2" data_id="${data}" onclick="DokumenMoa.detail(this)">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    `;
+
                         },
                     },
                     {

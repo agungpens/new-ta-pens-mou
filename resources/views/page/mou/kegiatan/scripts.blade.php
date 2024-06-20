@@ -1273,11 +1273,14 @@
                 let data_moa = response.data_moa;
                 let selectElementMou = $('#nomor_mou');
                 let selectElementMoa = $('#kumpulan_nomor_moa');
+                let tbody = $('table#table-moa').find('tbody');
 
 
                 // Clear any existing options
                 selectElementMou.empty();
                 selectElementMoa.empty();
+                tbody.empty();
+
 
                 // Create a default option
                 selectElementMou.append('<option value="">Please select</option>');

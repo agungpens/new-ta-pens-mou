@@ -144,13 +144,7 @@
                     // console.log('row', $(row));
                 },
                 "columnDefs": [
-                    {
-                        "targets": 3,
-                        "orderable": false,
-                        "createdCell": function (td, cellData, rowData, row, col) {
-                            $(td).addClass('td-padd');
-                        }
-                    },
+
                     {
                         "targets": 2,
                         "orderable": true,
@@ -180,14 +174,14 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    {
-                        "data": "id",
-                        "render": (data, type, row, meta) => {
-                            return `
-                            <i class="bx bx-edit" style="cursor: pointer;" data_id="${data}" onclick="Role.ubah(this)"></i>
-                            <i class="bx bx-trash" style="cursor: pointer;" data_id="${data}" nama_role="${row.nama_role}" onclick="Role.delete(this, event)"></i>`;
-                        }
-                    },
+                    // {
+                    //     "data": "id",
+                    //     "render": (data, type, row, meta) => {
+                    //         return `
+                    //         <i class="bx bx-edit" style="cursor: pointer;" data_id="${data}" onclick="Role.ubah(this)"></i>
+                    //         <i class="bx bx-trash" style="cursor: pointer;" data_id="${data}" nama_role="${row.nama_role}" onclick="Role.delete(this, event)"></i>`;
+                    //     }
+                    // },
                     {
                         "data": "nama_role",
                     },

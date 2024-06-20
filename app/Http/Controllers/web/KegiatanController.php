@@ -80,6 +80,8 @@ class KegiatanController extends Controller
         $data['data_instansi'] = array_values(array_unique($data['data_instansi']));
 
         $data['data'] = $api->getDetailData($data['id'])->original;
+
+        $data['data_by_instansi'] = $this->searchDataByInstansi($data['data']['instansi'])->original;
         $view = view('page.mou.kegiatan.form.formadd2', $data);
 
         $put['title_content'] = 'Detail kegiatan';
@@ -88,5 +90,22 @@ class KegiatanController extends Controller
         $put['js'] = $this->getJs();
         $put['view_file'] = $view;
         return view('template.main', $put);
+    }
+
+    public function searchDataByInstansi($instansi)
+    {
+        $searchTerm = $instansi;
+
+        $data['data'] = DokumenMou::where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%')
+            ->with(['DokumenMoa' => function ($query) use ($searchTerm) {
+                // Termasuk DokumenMoa yang sesuai dengan pencarian
+                $query->where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%');
+            }])
+            ->get()->toArray();
+
+        $data['data_mou'] = DokumenMou::where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%')->get()->toArray();
+        $data['data_moa'] = DokumenMoa::where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%')->get()->toArray();
+
+        return response()->json($data);
     }
 }
