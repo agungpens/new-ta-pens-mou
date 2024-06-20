@@ -371,7 +371,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Mitra Industri',
+                    label: 'Jumlah Mitra Industri',
                     data: chartData,
                     backgroundColor: backgroundColors,
                     borderColor: borderColors,
@@ -420,7 +420,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Level',
+                        label: 'jumlah Leveling Semua Dokumen',
                         data: chartData,
                         backgroundColor: backgroundColors,
                         borderColor: borderColors,
@@ -477,7 +477,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Jumlah Prodi',
+                    label: 'Jumlah Keterkaitan Prodi Dengan Dokumen',
                     data: chartData,
                     backgroundColor: backgroundColors,
                     borderColor: borderColors,

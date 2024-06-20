@@ -136,7 +136,8 @@
         let data = {
             data: {
                 id: $("input#id").val(),
-                nomor_mou: $("input#nomor_mou").val(),
+                nomor_mou: $("select#nomor_mou").val(),
+                kumpulan_nomor_moa: $("select#kumpulan_nomor_moa").val(),
                 instansi: $("#instansi").val(),
                 kegiatan: quill.root.innerHTML,
             },
@@ -1218,34 +1219,41 @@
             success: function (resp) {
                 message.closeLoading();
                 let data = resp.data;
+                let tbody = $('table#table-moa').find('tbody');
+                    tbody.empty();
+                if (data.length > 0) {
+                    // disabled select#kumpulan_nomor_moa
+                    $('select#kumpulan_nomor_moa').prop('disabled', true);
+                    $('select#kumpulan_nomor_moa').trigger('change');
 
                 // masukan kedalam table#table-moa
-                let tbody = $('table#table-moa').find('tbody');
-                tbody.empty();
-                $.each(data, function (index, value) {
-                    html = `<tr class="input" data_id="">
-                    <td class="text-end">
-                        <div class="input-group mb-3">
-                                    <button class="btn btn-outline-primary" type="button" id="button-addon1"
-                                        onclick="Kegiatan.showDataMoa(this, 'doc_moa${index}')">Pilih</button>
-                                    <input id="nomor_moa" src="" type="text" class="form-control doc_moa${index}"
-                                        placeholder="Pilih data dokumen moa" aria-label="Pilih data dokumen moa"
-                                        aria-describedby="button-addon1"
-                                        value="${value.nomor_moa} - ${value.kerja_sama_dengan}"
-                                        readonly>
-                                </div>
-                                <button class="btn btn-warning btn-sm"
-                                    onclick="return Kegiatan.confirmDownload('${value.file_moa}','${value.file_path}${value.file_moa}')">
-                                        Lihat File
-                                </button>
-                    </td>
-                    <td>
-                        <i class="bx bx-trash" style="cursor: pointer;" onclick="Kegiatan.deleteItemDocMa(this, event)"></i>
-                    </td>
-                </tr>`;
-                    tbody.prepend(html);
+                    $.each(data, function (index, value) {
+                        html = `<tr class="input" data_id="">
+                        <td class="text-end">
+                            <div class="input-group mb-3">
+                                        <input id="nomor_moa" src="" type="text" class="form-control doc_moa${index}"
+                                            placeholder="Pilih data dokumen moa" aria-label="Pilih data dokumen moa"
+                                            aria-describedby="button-addon1"
+                                            value="${value.nomor_moa} - ${value.kerja_sama_dengan}"
+                                            readonly>
+                                    </div>
+                                    <button class="btn btn-warning btn-sm"
+                                        onclick="return Kegiatan.confirmDownload('${value.file_moa}','${value.file_path}${value.file_moa}')">
+                                            Lihat File
+                                    </button>
+                        </td>
+                        <td>
+                            <i class="bx bx-trash" style="cursor: pointer;" onclick="Kegiatan.deleteItemDocMa(this, event)"></i>
+                        </td>
+                    </tr>`;
+                        tbody.prepend(html);
 
-                })
+                    });
+                } else {
+                    $('select#kumpulan_nomor_moa').prop('disabled', false);
+                    $('select#kumpulan_nomor_moa').trigger('change');
+                }
+
             },
         });
     },
@@ -1261,12 +1269,48 @@
             },
             dataType: "json",
             success: function (response) {
-                let data = response.data[0];
+                let data_mou = response.data_mou;
+                let data_moa = response.data_moa;
+                let selectElementMou = $('#nomor_mou');
+                let selectElementMoa = $('#kumpulan_nomor_moa');
 
-                $(`#nomor_mou`).val(`${data.nomor_mou} - ${data.kerja_sama_dengan}`);
-                Kegiatan.getDataMoaDariMou(data.nomor_mou);
+
+                // Clear any existing options
+                selectElementMou.empty();
+                selectElementMoa.empty();
+
+                // Create a default option
+                selectElementMou.append('<option value="">Please select</option>');
+                selectElementMoa.append('<option value="">Please select</option>');
+
+                // Populate the select element with options
+                $.each(data_mou, function (indexInArray, valueOfElement) {
+                    let option = $('<option>', {
+                        value: valueOfElement.nomor_mou,
+                        text: valueOfElement.nomor_mou + ' - ' + valueOfElement.kerja_sama_dengan
+                    });
+                    selectElementMou.append(option);
+                });
+                $.each(data_moa, function (indexInArray, valueOfElement) {
+
+                    let option = $('<option>', {
+                            value: valueOfElement.nomor_moa,
+                            text: valueOfElement.nomor_moa + ' - ' + valueOfElement.kerja_sama_dengan
+                            });
+                            selectElementMoa.append(option);
+
+                });
+                // $(`#nomor_mou`).val(`${data.nomor_mou} - ${data.kerja_sama_dengan}`);
+                // Kegiatan.getDataMoaDariMou(data.nomor_mou);
             }
         });
+    },
+
+    changeNomorMou:()=>{
+        let select_nomor_mou = $('#nomor_mou').val();
+
+
+        Kegiatan.getDataMoaDariMou(select_nomor_mou);
     }
 
 };

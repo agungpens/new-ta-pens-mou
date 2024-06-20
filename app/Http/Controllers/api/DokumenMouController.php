@@ -304,7 +304,10 @@ class DokumenMouController extends Controller
 
             $filePath = public_path($fileToDelete);
 
-            unlink($filePath);
+            // jika file didirektorinya ada maka hapus unlink($filePath);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
 
             $push->delete();
 

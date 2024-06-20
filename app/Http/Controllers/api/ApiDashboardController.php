@@ -25,7 +25,6 @@ class ApiDashboardController extends Controller
             $data_mitra_level = [];
             $prodi_doc = [];
             $jumlah_prodi = [];
-            $jumlah_kegiatan = [];
 
             $data_prodi = Prodi::get();
             // $data_kegiatan = Kegiatan::get();
@@ -55,15 +54,12 @@ class ApiDashboardController extends Controller
                 }
 
                 // jika sudah ada datanya di $data_mitra_instansi maka jangan di masukan
-                if (!in_array($value['kerja_sama_dengan'], $data_mitra_instansi)) {
-                    $data_mitra_instansi[] = $value['kerja_sama_dengan'];
-                }
-                if (!in_array($value['kategori_moa']['nama_kategori'], $data_mitra_industri)) {
-                    $data_mitra_industri[] = $value['kategori_moa']['nama_kategori'];
-                }
-                if (!in_array($value['level_doc_moa']['nama_level'], $data_mitra_level)) {
-                    $data_mitra_level[] = $value['level_doc_moa']['nama_level'];
-                }
+                $data_mitra_instansi[] = $value['kerja_sama_dengan'];
+
+                $data_mitra_industri[] = $value['kategori_moa']['nama_kategori'];
+
+                $data_mitra_level[] = $value['level_doc_moa']['nama_level'];
+
             }
 
             foreach ($prodi_doc as $key => $value) {
@@ -82,7 +78,7 @@ class ApiDashboardController extends Controller
             $counts2 = array_count_values($data_mitra_industri);
             $counts3 = array_count_values($jumlah_prodi);
             // $counts4 = array_count_values($jumlah_kegiatan);
-
+// dd($counts1);
             $result['data'] = [
                 'data_mitra_instansi' => $counts0,
                 'data_mitra_level' => $counts1,

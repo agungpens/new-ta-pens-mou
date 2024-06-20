@@ -99,8 +99,9 @@ class KegiatanController extends Controller
         $data_record = array();
         $nomor_moa = null;
         $nomor_mou = null;
+        // dd(isset($data['nomor_moa']));
 
-        if ($data['data']['nomor_mou'] == null && $data['nomor_moa'] == null) {
+        if ($data['data']['nomor_mou'] == null && (isset($data['nomor_moa']) && $data['nomor_moa'] == null)) {
             return response()->json([
                 'status' => 422,
                 'message' => 'Data Nomor MOU / MOA Tidak boleh kosong , isi salah satu saja!',
@@ -125,6 +126,10 @@ class KegiatanController extends Controller
             if (isset($data['nomor_moa'])) {
                 // $nomor_moa = serialize($data['nomor_moa']);
                 $nomor_moa = json_encode($data['nomor_moa']);
+            }
+            if (isset($data['data']['kumpulan_nomor_moa']) && $data['data']['kumpulan_nomor_moa'] != null) {
+                // $nomor_moa = serialize($data['nomor_moa']);
+                $nomor_moa = json_encode($data['data']['kumpulan_nomor_moa']);
             }
 
 
@@ -326,6 +331,9 @@ class KegiatanController extends Controller
                 $query->where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%');
             }])
             ->get()->toArray();
+
+        $data['data_mou'] = DokumenMou::where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%')->get()->toArray();
+        $data['data_moa'] = DokumenMoa::where('kerja_sama_dengan', 'like', '%' . $searchTerm . '%')->get()->toArray();
 
         return response()->json($data);
     }
