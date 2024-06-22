@@ -190,4 +190,49 @@ class MasterTemplateDocController extends Controller
         }
         return response()->json($result);
     }
+
+    public function getDataMobile()
+    {
+        $result['is_valid'] = false;
+        try {
+            DB::enableQueryLog();
+            $datadb = DB::table($this->getTableName() . ' as m')
+                ->leftJoin('jenis_doc as jd', 'jd.id', '=', 'm.jenis_doc_id')
+                ->orderBy('m.id')
+                ->select([
+                    'm.*',
+                    'jd.nama_jenis'
+                ])->get();
+
+
+            $result['is_valid'] = true;
+            $result['data'] = $datadb;
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+        }
+    }
+    public function getDetailDataMobile(Request $request)
+    {
+        $result['is_valid'] = false;
+        try {
+            DB::enableQueryLog();
+            $datadb = DB::table($this->getTableName() . ' as m')
+                ->leftJoin('jenis_doc as jd', 'jd.id', '=', 'm.jenis_doc_id')
+                ->orderBy('m.id')
+                ->select([
+                    'm.*',
+                    'jd.nama_jenis'
+                ])
+                ->where('m.id', $request->id)
+                ->get();
+
+
+            $result['is_valid'] = true;
+            $result['data'] = $datadb;
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+        }
+    }
 }
