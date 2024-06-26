@@ -195,20 +195,14 @@ class DokumenMouController extends Controller
     public function submit(Request $request)
     {
         $data = $request->post();
-
         // validation
         if (isset($data)) {
-            $this->validate($request, [
-                'data.nomor_mou' => 'required',
-                'data.judul_mou' => 'required',
-                'data.tanggal_dibuat' => 'required',
-                'data.tanggal_berakhir' => 'required',
-                'data.jenis' => 'required',
-                'data.kategori' => 'required',
-                'data.level' => 'required',
-                'data.status' => 'required',
-                'data.kerja_sama_dengan' => 'required',
-            ]);
+            if ($data['data']['nomor_mou'] == null) {
+                return response()->json([
+                    'status' => 422,
+                    'message' => 'Nomor MOU tidak boleh kosong'
+                ]);
+            }
         }
 
 
