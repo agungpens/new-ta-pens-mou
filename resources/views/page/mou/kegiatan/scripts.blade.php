@@ -137,7 +137,7 @@
             data: {
                 id: $("input#id").val(),
                 nomor_mou: $("select#nomor_mou").val(),
-                kumpulan_nomor_moa: $("select#kumpulan_nomor_moa").val(),
+                kumpulan_nomor_moa: [$("select#kumpulan_nomor_moa").val()],
                 instansi: $("#instansi").val(),
                 kegiatan: quill.root.innerHTML,
             },
@@ -349,7 +349,7 @@
                             {
                                 data: "nomor_moa",
                                 render: (data, type, row, meta) => {
-                                    let data_nomor_moa = row.nomor_moa;
+                                    let data_nomor_moa = JSON.parse(row.nomor_moa);
                                     if (data_nomor_moa != null) {
                                         let nomor_moa_html = '<ul>';
                                         $.each(data_nomor_moa, function (index, element) {

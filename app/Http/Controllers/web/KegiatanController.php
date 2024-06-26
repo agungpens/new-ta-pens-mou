@@ -70,10 +70,11 @@ class KegiatanController extends Controller
         $data = $request->all();
         $data['data_instansi'] = [];
 
-        $data['data_dokumen'] = DokumenMou::with(['DokumenMoa'])->get()->toArray();
+        $data['data_dokumen'] = DokumenMou::get()->toArray();
+        $data['data_dokumen_moa'] = DokumenMoa::get()->toArray();
         foreach ($data['data_dokumen'] as $dokumenMou) {
             $data['data_instansi'][] = $dokumenMou['kerja_sama_dengan'];
-            foreach ($dokumenMou['dokumen_moa'] as $dokumenMoa) {
+            foreach ($data['data_dokumen_moa'] as $dokumenMoa) {
                 $data['data_instansi'][] = $dokumenMoa['kerja_sama_dengan'];
             }
         }

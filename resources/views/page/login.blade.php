@@ -174,10 +174,10 @@
                     <div class="mb-3">
                         <div class="text-center">
                             <label class="form-label" for="download">Download Aplikasi SIMOUAKA MOBILE</label><br>
-                            <a href="https://drive.google.com/file/d/1y8-TAxA1QtofUS_tqFFM1DrrDHYG0PyF/view?usp=drive_link" target="_blank" class="btn btn-outline-primary">
+                            <a href="https://drive.google.com/file/d/1ImswHCQM1AxyCPY7pxvLT6Z3GOPCX3dR/view?usp=drive_link" target="_blank" class="btn btn-outline-primary">
                                 <small>Simouaka 📱</small>
                             </a>
-                        </div>
+                        </div> 
                     </div>
 
 

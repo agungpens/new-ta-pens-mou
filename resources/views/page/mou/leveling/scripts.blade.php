@@ -231,6 +231,7 @@
         });
     },
 
+
 }
 
 
@@ -239,6 +240,10 @@ $(function () {
     Leveling.setTextEditor();
     // Leveling.setDate();
     Leveling.select2All();
+
+
+
+
 });
 
 </script>

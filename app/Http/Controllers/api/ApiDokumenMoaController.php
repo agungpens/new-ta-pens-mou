@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendEmail;
+use App\Mail\SendEmailMoa;
 use App\Models\DokumenMoa;
 use App\Models\DokumenMou;
 use App\Models\Prodi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class ApiDokumenMoaController extends Controller
 {
@@ -549,6 +553,20 @@ class ApiDokumenMoaController extends Controller
                 'status' => 'TIDAK AKTIF'
             ];
             $result['is_valid'] = true;
+            if ($result['message']['nomor_moa'] == null) {
+                return response()->json($result);
+            }
+
+            $data_user = User::select('email')->whereIn('role_id', [1, 2])->where('email', '!=', null)->get();
+            $email_user = [];
+            foreach ($data_user as $key => $value) {
+                $email_user[] = $value->email;
+            }
+
+            foreach ($email_user as $key => $value) {
+                $data['email'] = $value;
+                Mail::to($value)->send(new SendEmailMoa($result));
+            }
             return response()->json($result);
         } catch (\Throwable $th) {
             $result['message'] = $th->getMessage();

@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendEmail;
 use App\Models\DokumenMou;
 use App\Models\JenisDoc;
 use App\Models\KategoriDoc;
 use App\Models\LevelingMou;
 use App\Models\Prodi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\IOFactory;
@@ -196,15 +199,15 @@ class DokumenMouController extends Controller
         // validation
         if (isset($data)) {
             $this->validate($request, [
-                'data.nomor_mou' =>'required',
-                'data.judul_mou' =>'required',
-                'data.tanggal_dibuat' =>'required',
-                'data.tanggal_berakhir' =>'required',
-                'data.jenis' =>'required',
-                'data.kategori' =>'required',
-                'data.level' =>'required',
-                'data.status' =>'required',
-                'data.kerja_sama_dengan' =>'required',
+                'data.nomor_mou' => 'required',
+                'data.judul_mou' => 'required',
+                'data.tanggal_dibuat' => 'required',
+                'data.tanggal_berakhir' => 'required',
+                'data.jenis' => 'required',
+                'data.kategori' => 'required',
+                'data.level' => 'required',
+                'data.status' => 'required',
+                'data.kerja_sama_dengan' => 'required',
             ]);
         }
 
@@ -397,7 +400,7 @@ class DokumenMouController extends Controller
                 ->where('id', $data['id'])
                 ->orderBy('tanggal_dibuat', 'desc')
                 ->first();
-// return response()->json($datadb);
+            // return response()->json($datadb);
             if ($datadb) {
                 $data_prodi = Prodi::get();
                 $data_gabungan = [];
@@ -457,6 +460,21 @@ class DokumenMouController extends Controller
                 'status' => 'TIDAK AKTIF'
             ];
             $result['is_valid'] = true;
+
+            if ($result['message']['nomor_mou'] == null) {
+                return response()->json($result);
+            }
+
+            $data_user = User::select('email')->whereIn('role_id', [1, 2])->where('email', '!=', null)->get();
+            $email_user = [];
+            foreach ($data_user as $key => $value) {
+                $email_user[] = $value->email;
+            }
+
+            foreach ($email_user as $key => $value) {
+                $data['email'] = $value;
+                Mail::to($value)->send(new SendEmail($result));
+            }
             return response()->json($result);
         } catch (\Throwable $th) {
             $result['message'] = $th->getMessage();

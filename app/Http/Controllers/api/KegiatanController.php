@@ -33,9 +33,9 @@ class KegiatanController extends Controller
             if (isset($_POST['search']['value'])) {
                 $keyword = $_POST['search']['value'];
                 $datadb->where(function ($query) use ($keyword) {
-                    $query->where('nomor_mou', 'LIKE', '%' . $keyword . '%');
+                    // $query->where('nomor_mou', 'LIKE', '%' . $keyword . '%');
+                    // $query->where('nomor_moa', 'LIKE', '%' . $keyword . '%');
                     $query->where('instansi', 'LIKE', '%' . $keyword . '%');
-                    // $query->Orwhere('status', 'LIKE', '%' . $keyword . '%');
                 });
             }
 
@@ -52,11 +52,14 @@ class KegiatanController extends Controller
             }
         }
 
-        // Mengambil data dari database dan melakukan unserialize pada kolom nomor_moa
-        $data['data'] = $datadb->get()->map(function ($item) {
-            $item['nomor_moa'] = json_decode($item['nomor_moa']);
-            return $item;
-        })->toArray();
+        $data['data'] = $datadb->get()->toArray();
+        // // Mengambil data dari database dan melakukan unserialize pada kolom nomor_moa
+        // $data['data'] = $datadb->get()->map(function ($item) {
+        //     $item['nomor_moa'] = json_decode($item['nomor_moa']);
+        //     return $item;
+        // })->toArray();
+
+        // dd($data['data']);
 
         $data['draw'] = $_POST['draw'];
         $query = DB::getQueryLog();
@@ -71,7 +74,7 @@ class KegiatanController extends Controller
         DB::enableQueryLog();
 
         // Mengambil data dari tabel Kegiatan dengan relasi
-        $datadb = Kegiatan::with(['NomorDocMou', 'Lampiran'])->where('id', $id)->first();
+        $datadb = Kegiatan::with(['Lampiran'])->where('id', $id)->first();
         // Melakukan unserialize pada nilai kolom nomor_moa
         $data_array = json_decode($datadb->nomor_moa);
         if ($data_array == null) {
@@ -100,8 +103,8 @@ class KegiatanController extends Controller
         $nomor_moa = null;
         $nomor_mou = null;
 
-
-        if ( $data['data']['nomor_mou'] == null || (isset($data['nomor_moa']) && $data['nomor_moa'] == null)) {
+        // dd($data);
+        if ($data['data']['nomor_mou'] == null && (isset($data['nomor_moa']) && $data['nomor_moa'] == null)) {
             return response()->json([
                 'status' => 422,
                 'message' => 'Data Nomor MOU / MOA Tidak boleh kosong , isi salah satu saja!',
@@ -115,6 +118,7 @@ class KegiatanController extends Controller
             ]);
         }
 
+
         // begin transaction
         DB::beginTransaction();
         try {
@@ -126,7 +130,7 @@ class KegiatanController extends Controller
                 // $nomor_moa = serialize($data['nomor_moa']);
                 $nomor_moa = json_encode($data['nomor_moa']);
             }
-            if (isset($data['data']['kumpulan_nomor_moa']) && $data['data']['kumpulan_nomor_moa'] != null) {
+            if (isset($data['data']['kumpulan_nomor_moa']) && $data['data']['kumpulan_nomor_moa'] != [null]) {
                 // $nomor_moa = serialize($data['nomor_moa']);
                 $nomor_moa = json_encode($data['data']['kumpulan_nomor_moa']);
             }
@@ -138,7 +142,7 @@ class KegiatanController extends Controller
 
             $push->id = $data['data']['id'];
             $push->nomor_mou = $nomor_mou;
-            $push->nomor_moa = $nomor_moa;
+            $push->nomor_moa = $nomor_moa == "[null]" ? null : $nomor_moa;
             $push->instansi = $data['data']['instansi'];
             $push->kegiatan = $data['data']['kegiatan'];
             $push->save();
